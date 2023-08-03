@@ -1,4 +1,8 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
+    id ("org.jetbrains.kotlin.kapt") version "1.4.30"
     kotlin("jvm") version "1.8.20"
     application
 }
@@ -8,11 +12,34 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven{
+        url = uri("https://jitpack.io")
+    }
 }
 
+
 dependencies {
+    kapt("info.picocli:picocli-codegen:4.6.1")
+    implementation ("info.picocli:picocli:4.6.1")
+    implementation ("com.github.paulorb:modbus-kt:1.0.0")
     testImplementation(kotlin("test"))
 }
+
+kapt {
+    arguments {
+        arg("project", "${project.group}/${project.name}")
+    }
+}
+
+val jar by tasks.getting(Jar::class) {
+    manifest {
+        attributes["Main-Class"] = "CheckSumKt"
+    }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }) {
+        exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
+    }
+}
+
 
 tasks.test {
     useJUnitPlatform()
@@ -21,6 +48,7 @@ tasks.test {
 kotlin {
     jvmToolchain(11)
 }
+
 
 application {
     mainClass.set("MainKt")
