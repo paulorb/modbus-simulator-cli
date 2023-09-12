@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="US-ASCII" ?>
 <device address="0.0.0.0" port="502">
-    <configuration initializeUndefinedRegisters="true" valueInitializationMethod="ZERO">
+    <configuration initializeUndefinedRegisters="true" initialValue="0">
         <registers>
             <register addressType="HOLDING_REGISTER" address="10" symbol="RPM_MOTOR">500</register>
             <register addressType="HOLDING_REGISTER" address="100" datatype="FLOAT32" symbol="MOTOR_SPEED1">123.7</register>
