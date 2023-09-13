@@ -22,12 +22,16 @@ class Checksum : Callable<Int> {
     var port = "502"
 
 
+    private lateinit var plcMemory: PlcMemory
 
     override fun call(): Int {
+        val configuration = ConfigurationParser()
+        plcMemory = PlcMemory(configuration)
+
         //val fileContents = Files.readAllBytes(file.toPath())
         //val digest = MessageDigest.getInstance(port).digest(fileContents)
         //println(("%0" + digest.size * 2 + "x").format(BigInteger(1, digest)))
-        var modbusServer = ModbusServer(ModbusServerEventListenerReplyRandomNumbers())
+        var modbusServer = ModbusServer(plcMemory)
         try {
             modbusServer.start()
             modbusServer.block()
