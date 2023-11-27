@@ -1,72 +1,80 @@
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonRootName
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.MapperFeature
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
-import com.fasterxml.jackson.dataformat.xml.XmlFactory
-import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import javax.xml.stream.XMLInputFactory
+import java.io.StringReader
+import javax.xml.bind.JAXBContext
+import javax.xml.bind.JAXBException
+import javax.xml.bind.annotation.*
 
 class ConfigurationParser {
-   private var xmlDeserializer : ObjectMapper = XmlMapper(JacksonXmlModule().apply {
-       setDefaultUseWrapper(false)
-   }).registerKotlinModule()
-       .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
-       .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
     private fun load(): Device? {
-        return xmlDeserializer.readValue(this::class.java.classLoader.getResource("configuration.xml")!!.readText(), Device::class.java)
+        try {
+            val context = JAXBContext.newInstance(Device::class.java)
+            val unmarshaller = context.createUnmarshaller()
+            val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
+            val device = unmarshaller.unmarshal(reader) as Device
+            return device
+        } catch (e: JAXBException) {
+            e.printStackTrace()
+        }
+        return null
     }
 
     fun getConfiguredDevice() : Device {
         return load()!!
     }
-
 }
 
 
-@JacksonXmlRootElement
-class Device(
-    @JacksonXmlProperty(isAttribute = true)
-    var address: String,
-    @JacksonXmlProperty(isAttribute = true)
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+data class Device(
+    @field:XmlAttribute(required = false)
+    var ip: String,
+    @field:XmlAttribute(required = false)
     var port: String,
-    val configuration: Configuration
-    )
+    @field:XmlElement
+    val configuration: Configuration){
+    constructor() : this("", "", Configuration(true,0, Registers(mutableListOf())))
+}
 
 
-class Configuration(
+
+
+data class Configuration(
+    @field:XmlAttribute(required = false)
     val initializeUndefinedRegisters: Boolean,
+    @field:XmlAttribute(required = false)
     val initialValue: Int,
+    @field:XmlElement
     val registers : Registers
-)
+) {
+    constructor(): this(true, 0, Registers(mutableListOf()))
+}
 
-class Registers(
-    val register: List<Register>
-)
+data class Registers(
+    @field:XmlElement(name = "register")
+    val register: MutableList<Register>
+) {
+    constructor(): this(mutableListOf())
+}
 
 enum class AddressType(val desc: String) {
     HOLDING_REGISTER("HOLDING_REGISTER"),
     COIL("COIL")
 }
 
-class Register(
-    @JacksonXmlProperty(isAttribute = true)
+//<register addressType="HOLDING_REGISTER" address="200"  datatype="UINT16" symbol="RPM_MOTOR1">500</register>
+//<register addressType="COIL" address="10" symbol="RELAYON">1</register>
+data class Register(
+    @XmlAttribute
     val addressType: AddressType,
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     val address: String,
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute(required = false)
+    val datatype: String,
+    @XmlAttribute
     val symbol: String,
-    @JacksonXmlText(value = true)
-    @JacksonXmlProperty(localName="Register")
-    @JsonProperty("Register")
+    @XmlValue
     val value: String
-)
+) {
+    constructor() : this(AddressType.COIL, "","","","")
+}

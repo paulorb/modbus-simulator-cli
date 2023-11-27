@@ -17,16 +17,13 @@ repositories {
     }
 }
 
-val jacksonVersion = "2.15.+"
 
 dependencies {
     kapt("info.picocli:picocli-codegen:4.6.1")
     implementation ("info.picocli:picocli:4.6.1")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
-
-    // implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.15.+"
-   // implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.1")
+    implementation("javax.xml.bind:jaxb-api:2.3.1")
+    implementation("com.sun.xml.bind:jaxb-core:2.3.0.1")
+    implementation("com.sun.xml.bind:jaxb-impl:2.3.3")
     implementation ("com.github.paulorb:modbus-kt:1.0.0")
     testImplementation(kotlin("test"))
 }
