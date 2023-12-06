@@ -13,7 +13,7 @@
         <set symbol="RELAYON">0</set>
         <random symbol="TEMPERATURE1" valueMin="-50.0" valueMax="10.0"/>
         <delay>100</delay>
-        <linear symbol="RPM_MOTOR1" a="5" b="" minX="500" maxX="1000" replay="false" step="3"/>
+        <linear symbol="RPM_MOTOR1" a="5" b="4" minX="500" maxX="1000" replay="false" step="3"/>
         <set symbol="RELAYON">1</set>
         <delay>100</delay>
         <add symbol="MOTOR_SPEED1">RPM_MOTOR1</add>

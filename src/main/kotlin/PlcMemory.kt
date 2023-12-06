@@ -1,4 +1,8 @@
 import java.util.concurrent.ConcurrentHashMap
+import javax.xml.bind.JAXBElement
+
+
+
 
 class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventListener {
 
@@ -11,9 +15,21 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
     init {
         device.configuration.registers.register.forEach { register ->
             when(register.addressType){
-                AddressType.HOLDING_REGISTER -> holdingRegister[register.address.toInt()] =  register.value.toInt()
+                AddressType.HOLDING_REGISTER -> {
+                    if(register.datatype == "FLOAT32"){
+                        NotImplementedError("FLOAT32 is not supported")
+                    }else
+                        holdingRegister[register.address.toInt()] =  register.value.toInt()
+                }
                 AddressType.COIL -> coils[register.address.toInt()] = register.value.toBoolean()
             }
+        }
+        var simulationElements = device.simulation.randomElements
+        simulationElements?.forEach {element ->
+            println(element)
+          //  if (element is Set) {
+           //     val value = element.value
+           // }
         }
     }
     override fun forceMultipleCoils(addressValueList: MutableList<Pair<Int, Boolean>>) {
