@@ -26,10 +26,27 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         }
         var simulationElements = device.simulation.randomElements
         simulationElements?.forEach {element ->
-            println(element)
-          //  if (element is Set) {
-           //     val value = element.value
-           // }
+            when(element){
+                is Set -> {
+                    println("Set symbol ${element.symbol} value ${element.value}")
+                }
+                is Random -> {
+                    println("Random symbol ${element.symbol} valueMax ${element.valueMax} valueMin ${element.valueMin}")
+                }
+                is Delay -> {
+                    println("Delay value ${element.value}")
+                }
+                is Linear -> {
+                    //TODO
+                }
+                is Add -> {
+                    //TODO
+                }
+                is Sub -> {
+                    //TODO
+                }
+                else -> throw UnsupportedOperationException("Unknown simulation step type")
+            }
         }
     }
     override fun forceMultipleCoils(addressValueList: MutableList<Pair<Int, Boolean>>) {
