@@ -7,9 +7,9 @@ import javax.xml.bind.JAXBElement
 class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventListener {
 
     var coils: ConcurrentHashMap<Int, Boolean> = ConcurrentHashMap()
-    var inputStatus: ConcurrentHashMap<Int, Int> = ConcurrentHashMap()
+    var inputStatus: ConcurrentHashMap<Int, Boolean> = ConcurrentHashMap()
     var register: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
-    var holdingRegister: ConcurrentHashMap<Int, Int> = ConcurrentHashMap()
+    var holdingRegister: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
     var device =  configurationParser.getConfiguredDevice()
 
     init {
@@ -19,7 +19,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
                     if(register.datatype == "FLOAT32"){
                         NotImplementedError("FLOAT32 is not supported")
                     }else
-                        holdingRegister[register.address.toInt()] =  register.value.toInt()
+                        holdingRegister[register.address.toInt()] =  register.value.toShort()
                 }
                 AddressType.COIL -> coils[register.address.toInt()] = register.value.toBoolean()
             }
@@ -50,24 +50,35 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         }
     }
     override fun forceMultipleCoils(addressValueList: MutableList<Pair<Int, Boolean>>) {
+        println("forceMultipleCoils")
         addressValueList.forEach { coil ->
             coils[coil.first] = coil.second
         }
     }
 
     override fun forceSingleCoil(address: Int, value: Boolean) {
+        println("forceSingleCoil")
         coils[address] = value
     }
 
+    // 4x
     override fun presetMultipleRegisters(addressValueList: MutableList<Pair<Int, Short>>) {
-        TODO("Not yet implemented")
+        println("presetMultipleRegisters")
+        addressValueList.forEach { register ->
+            holdingRegister[register.first] = register.second
+        }
     }
+
+
 
     override fun presetSingleRegister(address: Int, value: Boolean) {
+        println("presetSingleRegister")
         TODO("Not yet implemented")
     }
 
+    // 0x Registers
     override fun readCoilStatus(startAddress: Int, numberOfRegisters: Int): List<Boolean> {
+        println("readCoilStatus")
         val listCoils = mutableListOf<Boolean>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(coils[i] != null){
@@ -79,16 +90,46 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         return listCoils
     }
 
+    // 4x
     override fun readHoldingRegister(startAddress: Int, numberOfRegisters: Int): List<Short> {
-        TODO("Not yet implemented")
+        println("readHoldingRegister")
+        val listHoldingRegisters = mutableListOf<Short>()
+        for(i in startAddress until startAddress + numberOfRegisters) {
+            if(holdingRegister[i] != null){
+                listHoldingRegisters.add(holdingRegister[i]!!)
+            }else{
+                listHoldingRegisters.add(0)
+            }
+        }
+        return listHoldingRegisters
     }
 
+    // 3x register
     override fun readInputRegister(startAddress: Int, numberOfRegisters: Int): List<Short> {
-        TODO("Not yet implemented")
+        println("readInputRegister")
+        val listInputRegisters = mutableListOf<Short>()
+        for(i in startAddress until startAddress + numberOfRegisters) {
+            if(register[i] != null){
+                listInputRegisters.add(register[i]!!)
+            }else{
+                listInputRegisters.add(0)
+            }
+        }
+        return listInputRegisters
     }
 
+    // 1x register
     override fun readInputStatus(startAddress: Int, numberOfRegisters: Int): List<Boolean> {
-        TODO("Not yet implemented")
+        println("readInputStatus")
+        val listCoils = mutableListOf<Boolean>()
+        for(i in startAddress until startAddress + numberOfRegisters) {
+            if(inputStatus[i] != null){
+                listCoils.add(inputStatus[i]!!)
+            }else{
+                listCoils.add(false)
+            }
+        }
+        return listCoils
     }
 
 }
