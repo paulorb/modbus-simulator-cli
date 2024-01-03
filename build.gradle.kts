@@ -24,7 +24,7 @@ dependencies {
     implementation("javax.xml.bind:jaxb-api:2.3.1")
     implementation("com.sun.xml.bind:jaxb-core:2.3.0.1")
     implementation("com.sun.xml.bind:jaxb-impl:2.3.3")
-    implementation ("com.github.paulorb:modbus-kt:1.0.0")
+    implementation ("com.github.paulorb:modbus-kt:1.0.4")
     testImplementation(kotlin("test"))
 }
 
