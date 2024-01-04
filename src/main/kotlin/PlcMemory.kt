@@ -1,14 +1,11 @@
 import java.util.concurrent.ConcurrentHashMap
-import javax.xml.bind.JAXBElement
-
-
 
 
 class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventListener {
 
     var coils: ConcurrentHashMap<Int, Boolean> = ConcurrentHashMap()
     var inputStatus: ConcurrentHashMap<Int, Boolean> = ConcurrentHashMap()
-    var register: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
+    var inputRegister: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
     var holdingRegister: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
     var device =  configurationParser.getConfiguredDevice()
 
@@ -21,7 +18,9 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
                     }else
                         holdingRegister[register.address.toInt()] =  register.value.toShort()
                 }
-                AddressType.COIL -> coils[register.address.toInt()] = register.value.toBoolean()
+                AddressType.COIL -> coils[register.address.toInt()] = (register.value.toInt() == 1)
+                AddressType.DISCRETE_INPUT -> inputStatus[register.address.toInt()] =  (register.value.toInt() == 1)
+                AddressType.INPUT_REGISTER -> inputRegister[register.address.toInt()] =  register.value.toShort()
             }
         }
         var simulationElements = device.simulation.randomElements
@@ -49,21 +48,24 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
             }
         }
     }
+
+    //0x
     override fun forceMultipleCoils(addressValueList: MutableList<Pair<Int, Boolean>>) {
-        println("forceMultipleCoils")
+        println("(0x) forceMultipleCoils")
         addressValueList.forEach { coil ->
             coils[coil.first] = coil.second
         }
     }
 
+    //0x
     override fun forceSingleCoil(address: Int, value: Boolean) {
-        println("forceSingleCoil")
+        println("(0x) forceSingleCoil")
         coils[address] = value
     }
 
     // 4x
     override fun presetMultipleRegisters(addressValueList: MutableList<Pair<Int, Short>>) {
-        println("presetMultipleRegisters")
+        println("(4x) presetMultipleRegisters")
         addressValueList.forEach { register ->
             holdingRegister[register.first] = register.second
         }
@@ -78,7 +80,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
     // 0x Registers
     override fun readCoilStatus(startAddress: Int, numberOfRegisters: Int): List<Boolean> {
-        println("readCoilStatus")
+        println("(0x) readCoilStatus")
         val listCoils = mutableListOf<Boolean>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(coils[i] != null){
@@ -92,7 +94,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
     // 4x
     override fun readHoldingRegister(startAddress: Int, numberOfRegisters: Int): List<Short> {
-        println("readHoldingRegister")
+        println("(4x) readHoldingRegister")
         val listHoldingRegisters = mutableListOf<Short>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(holdingRegister[i] != null){
@@ -106,11 +108,11 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
     // 3x register
     override fun readInputRegister(startAddress: Int, numberOfRegisters: Int): List<Short> {
-        println("readInputRegister")
+        println("(3x) readInputRegister")
         val listInputRegisters = mutableListOf<Short>()
         for(i in startAddress until startAddress + numberOfRegisters) {
-            if(register[i] != null){
-                listInputRegisters.add(register[i]!!)
+            if(inputRegister[i] != null){
+                listInputRegisters.add(inputRegister[i]!!)
             }else{
                 listInputRegisters.add(0)
             }

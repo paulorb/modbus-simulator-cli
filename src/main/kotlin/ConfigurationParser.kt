@@ -145,7 +145,9 @@ data class Registers(
 
 enum class AddressType(val desc: String) {
     HOLDING_REGISTER("HOLDING_REGISTER"),
-    COIL("COIL")
+    COIL("COIL"),
+    DISCRETE_INPUT("DISCRETE_INPUT"),
+    INPUT_REGISTER("INPUT_REGISTER")
 }
 
 //<register addressType="HOLDING_REGISTER" address="200"  datatype="UINT16" symbol="RPM_MOTOR1">500</register>
