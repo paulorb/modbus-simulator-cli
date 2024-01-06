@@ -1,3 +1,5 @@
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
@@ -23,11 +25,13 @@ class Checksum : Callable<Int> {
 
 
     private lateinit var plcMemory: PlcMemory
+    private lateinit var plcSimulation: PlcSimulation
 
     override fun call(): Int {
+        val mainCoroutineScope = CoroutineScope(Dispatchers.Default)
         val configuration = ConfigurationParser()
         plcMemory = PlcMemory(configuration)
-
+        plcSimulation = PlcSimulation(configuration, plcMemory, mainCoroutineScope)
         //val fileContents = Files.readAllBytes(file.toPath())
         //val digest = MessageDigest.getInstance(port).digest(fileContents)
         //println(("%0" + digest.size * 2 + "x").format(BigInteger(1, digest)))

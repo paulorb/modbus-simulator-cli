@@ -3,11 +3,11 @@ import java.util.concurrent.ConcurrentHashMap
 
 class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventListener {
 
-    var coils: ConcurrentHashMap<Int, Boolean> = ConcurrentHashMap()
-    var inputStatus: ConcurrentHashMap<Int, Boolean> = ConcurrentHashMap()
-    var inputRegister: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
-    var holdingRegister: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
-    var device =  configurationParser.getConfiguredDevice()
+    private var coils: ConcurrentHashMap<Int, Boolean> = ConcurrentHashMap()
+    private var inputStatus: ConcurrentHashMap<Int, Boolean> = ConcurrentHashMap()
+    private var inputRegister: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
+    private var holdingRegister: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
+    private var device =  configurationParser.getConfiguredDevice()
 
     init {
         device.configuration.registers.register.forEach { register ->
@@ -61,6 +61,11 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
     override fun forceSingleCoil(address: Int, value: Boolean) {
         println("(0x) forceSingleCoil")
         coils[address] = value
+    }
+
+    //1x
+    fun setDiscreteInput(address: Int, value: Boolean) {
+        inputStatus[address] = value
     }
 
     // 4x

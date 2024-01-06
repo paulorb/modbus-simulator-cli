@@ -36,15 +36,17 @@ data class Device(
     @field:XmlElement
     val simulation: Simulation,
     ){
-    constructor() : this("", "", Configuration(true,0, Registers(mutableListOf())), Simulation(mutableListOf()))
+    constructor() : this("", "", Configuration(true,0, Registers(mutableListOf())), Simulation(1000,mutableListOf()))
 }
 
-
+@XmlAccessorType(XmlAccessType.NONE)
 class Simulation(
+    @field:XmlAttribute(required = true)
+    var plcScanTime: Int,
     @XmlAnyElement(lax = true)
     var randomElements: List<Any>
 ){
-    constructor() : this(mutableListOf())
+    constructor() : this(1000,mutableListOf())
 
 }
 
@@ -120,9 +122,9 @@ data class Set(
     @field:XmlAttribute(required = true)
     val symbol: String,
     @field:XmlValue
-    val value: Double
+    val value: String
 ){
-    constructor(): this("", 0.0)
+    constructor(): this("", "0")
 }
 
 data class Configuration(
@@ -136,11 +138,19 @@ data class Configuration(
     constructor(): this(true, 0, Registers(mutableListOf()))
 }
 
-data class Registers(
+class Registers(
     @field:XmlElement(name = "register")
     val register: MutableList<Register>
 ) {
     constructor(): this(mutableListOf())
+    fun getVarConfiguration(symbolName: String) : Register? {
+        register.forEach {register ->
+            if(register.symbol == symbolName){
+                return register
+            }
+        }
+        return null
+    }
 }
 
 enum class AddressType(val desc: String) {
