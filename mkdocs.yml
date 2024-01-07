@@ -1,0 +1,24 @@
+site_name: Modbus Simulator CLI
+site_url: https://wp-net.github.io/ModbusSimulatorCLI/
+site_author: Paulo Balbino
+site_description: >-
+  Modbus TCP Server with advanced simulation
+
+# Repository
+repo_name: paulorb/modbus-simulator-cli
+repo_url: https://github.com/paulorb/modbus-simulator-cli
+edit_uri: ""
+
+# Copyright
+copyright: Copyright &copy; 2023 - 2024 Paulo Balbino
+
+# Page tree
+nav:
+  - Getting started:
+      - Overview: index.md
+      - Installation: getting-started/installation.md
+      - Quick start: getting-started/quick-start.md
+      - License: getting-started/license.md
+      - Contributing: getting-started/contributing.md
+
+theme: readthedocs
