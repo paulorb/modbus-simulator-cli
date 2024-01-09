@@ -14,7 +14,12 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
             when(register.addressType){
                 AddressType.HOLDING_REGISTER -> {
                     if(register.datatype == "FLOAT32"){
-                        NotImplementedError("FLOAT32 is not supported")
+                        val floatValue = register.value.toFloat()
+                        val intValue = java.lang.Float.floatToIntBits(floatValue)
+                        val lowWord = intValue and 0xFFFF
+                        val highWord = (intValue ushr 16) and 0xFFFF
+                        holdingRegister[register.address.toInt()] =  lowWord.toShort()
+                        holdingRegister[register.address.toInt() + 1] =  highWord.toShort()
                     }else
                         holdingRegister[register.address.toInt()] =  register.value.toShort()
                 }
@@ -103,8 +108,10 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         val listHoldingRegisters = mutableListOf<Short>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(holdingRegister[i] != null){
+                println("readHoldingRegister address $i value=${holdingRegister[i]}")
                 listHoldingRegisters.add(holdingRegister[i]!!)
             }else{
+                println("readHoldingRegister address $i value=0")
                 listHoldingRegisters.add(0)
             }
         }
