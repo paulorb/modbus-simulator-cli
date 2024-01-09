@@ -27,7 +27,30 @@ class PlcSimulation(
                                         println("ERROR: Invalid value format. Symbol ${element.symbol} is of BOOL type and supports only values 0 or 1 not ${variable.value}")
                                     }
                                     when (variable.addressType) {
-                                        AddressType.HOLDING_REGISTER -> TODO()
+                                        AddressType.HOLDING_REGISTER -> {
+                                            if(variable.datatype == "FLOAT32"){
+                                                val floatValue = element.value.toFloat()
+                                                val intValue = java.lang.Float.floatToIntBits(floatValue)
+                                                val lowWord = intValue and 0xFFFF
+                                                val highWord = (intValue ushr 16) and 0xFFFF
+                                                memory.presetMultipleRegisters(
+                                                    mutableListOf<Pair<Int, Short>>(
+                                                        Pair<Int, Short>(variable.address.toInt(),
+                                                            lowWord.toShort()),
+                                                        Pair<Int, Short>(variable.address.toInt() + 1,
+                                                            highWord.toShort()),
+                                                    )
+                                                )
+                                            }else{
+                                                //Int16
+                                                memory.presetMultipleRegisters(
+                                                    mutableListOf<Pair<Int, Short>>(
+                                                        Pair<Int, Short>(variable.address.toInt(),
+                                                            element.value.toShort())
+                                                    )
+                                                )
+                                            }
+                                        }
                                         AddressType.COIL -> {
                                             memory.forceSingleCoil(
                                                 variable.address.toInt(),
