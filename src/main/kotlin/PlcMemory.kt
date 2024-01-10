@@ -73,6 +73,11 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         inputStatus[address] = value
     }
 
+    //3x
+    fun setInputRegister(address: Int, value: Short){
+        inputRegister[address] = value
+    }
+
     // 4x
     override fun presetMultipleRegisters(addressValueList: MutableList<Pair<Int, Short>>) {
         println("(4x) presetMultipleRegisters")

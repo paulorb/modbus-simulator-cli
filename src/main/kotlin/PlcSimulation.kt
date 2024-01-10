@@ -64,7 +64,9 @@ class PlcSimulation(
                                                 element.value.toBooleanFromBinary()
                                             )
                                         }
-                                        AddressType.INPUT_REGISTER -> TODO()
+                                        AddressType.INPUT_REGISTER -> {
+                                            memory.setInputRegister(variable.address.toInt(), element.value.toShort())
+                                        }
                                     }
                                 }
                             }
