@@ -17,25 +17,45 @@ import kotlin.system.exitProcess
     description = ["Modbus TCP Simulator"])
 class Checksum : Callable<Int> {
 
-    @Option(names = ["-f", "--file"], description = ["configuration file (JSON)"])
-    lateinit var file: File
+    @Option(names = ["-f", "--file"], description = ["custom simulation configuration file (JSON)"])
+    var file = ""
 
     @Option(names = ["-p", "--port"], description = ["server TCP port"])
     var port = "502"
 
+    @Option(names = ["-sr", "--simulation-random"], description = ["random number simulation"])
+    var simulationRandomValues = false
+
+
 
     private lateinit var plcMemory: PlcMemory
     private lateinit var plcSimulation: PlcSimulation
+    private lateinit var modbusServer: ModbusServer
 
     override fun call(): Int {
         val mainCoroutineScope = CoroutineScope(Dispatchers.Default)
         val configuration = ConfigurationParser()
-        plcMemory = PlcMemory(configuration)
-        plcSimulation = PlcSimulation(configuration, plcMemory, mainCoroutineScope)
+
+        if(simulationRandomValues && file.isNotEmpty()){
+            println("-f and -sr cannot be mixed, one of the simulations must be chosen")
+            return -1
+        }
         //val fileContents = Files.readAllBytes(file.toPath())
         //val digest = MessageDigest.getInstance(port).digest(fileContents)
         //println(("%0" + digest.size * 2 + "x").format(BigInteger(1, digest)))
-        var modbusServer = ModbusServer(plcMemory)
+        if(simulationRandomValues) {
+            modbusServer = ModbusServer(plcMemory)
+        }else {
+            if (file.isNotEmpty()) {
+                // -f file based (Custom simulation)
+                configuration.setFileName(file)
+            }
+            // if not set default, reading internal xml
+            plcMemory = PlcMemory(configuration)
+            plcSimulation = PlcSimulation(configuration, plcMemory, mainCoroutineScope)
+            modbusServer = ModbusServer(plcMemory)
+        }
+
         try {
             modbusServer.start()
             modbusServer.block()

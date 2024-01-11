@@ -1,3 +1,5 @@
+import java.io.BufferedReader
+import java.io.File
 import java.io.StringReader
 import javax.xml.bind.JAXBContext
 import javax.xml.bind.JAXBException
@@ -5,13 +7,23 @@ import javax.xml.bind.annotation.*
 
 class ConfigurationParser {
 
+    private var fileName: String = ""
+    fun setFileName(file: String) {
+        fileName = file
+    }
     private fun load(): Device? {
         try {
             val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java)
             val unmarshaller = context.createUnmarshaller()
-            val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
-            val device = unmarshaller.unmarshal(reader) as Device
-            return device
+            if(fileName.isEmpty()) {
+                val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
+                val device = unmarshaller.unmarshal(reader) as Device
+                return device
+            }else{
+                val bufferedReader: BufferedReader = File(fileName).bufferedReader()
+                val device = unmarshaller.unmarshal(bufferedReader) as Device
+                return device
+            }
         } catch (e: JAXBException) {
             e.printStackTrace()
         }
