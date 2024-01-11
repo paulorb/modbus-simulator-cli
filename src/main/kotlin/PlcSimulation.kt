@@ -1,4 +1,5 @@
 import kotlinx.coroutines.*
+import java.lang.Float
 
 
 class PlcSimulation(
@@ -17,58 +18,7 @@ class PlcSimulation(
                     simulationConfiguration.randomElements.forEach { element ->
                         when (element) {
                             is Set -> {
-                                println("Set symbol ${element.symbol} value ${element.value}")
-                                var variable = configuration.registers.getVarConfiguration(element.symbol)
-                                if (variable == null) {
-                                    println("ERROR: Symbol ${element.symbol} not found during Set execution")
-                                    throw CancellationException("Error - Set")
-                                }else {
-                                    if ((variable.addressType == AddressType.COIL || variable.addressType == AddressType.DISCRETE_INPUT) && (variable.value != "0" && variable.value != "1")) {
-                                        println("ERROR: Invalid value format. Symbol ${element.symbol} is of BOOL type and supports only values 0 or 1 not ${variable.value}")
-                                    }
-                                    when (variable.addressType) {
-                                        AddressType.HOLDING_REGISTER -> {
-                                            if(variable.datatype == "FLOAT32"){
-                                                val floatValue = element.value.toFloat()
-                                                val intValue = java.lang.Float.floatToIntBits(floatValue)
-                                                val lowWord = intValue and 0xFFFF
-                                                val highWord = (intValue ushr 16) and 0xFFFF
-                                                memory.presetMultipleRegisters(
-                                                    mutableListOf<Pair<Int, Short>>(
-                                                        Pair<Int, Short>(variable.address.toInt(),
-                                                            lowWord.toShort()),
-                                                        Pair<Int, Short>(variable.address.toInt() + 1,
-                                                            highWord.toShort()),
-                                                    )
-                                                )
-                                            }else{
-                                                //Int16
-                                                memory.presetMultipleRegisters(
-                                                    mutableListOf<Pair<Int, Short>>(
-                                                        Pair<Int, Short>(variable.address.toInt(),
-                                                            element.value.toShort())
-                                                    )
-                                                )
-                                            }
-                                        }
-                                        AddressType.COIL -> {
-                                            memory.forceSingleCoil(
-                                                variable.address.toInt(),
-                                                element.value.toBooleanFromBinary()
-                                            )
-                                        }
-
-                                        AddressType.DISCRETE_INPUT -> {
-                                            memory.setDiscreteInput(
-                                                variable.address.toInt(),
-                                                element.value.toBooleanFromBinary()
-                                            )
-                                        }
-                                        AddressType.INPUT_REGISTER -> {
-                                            memory.setInputRegister(variable.address.toInt(), element.value.toShort())
-                                        }
-                                    }
-                                }
+                                setOperation(element, configuration, memory)
                             }
 
                             is Random -> {
@@ -109,6 +59,78 @@ class PlcSimulation(
             }
         }
 
+    }
+
+    private fun setOperation(element: Set, configuration: Configuration, memory: PlcMemory) {
+        println("Set symbol ${element.symbol} value ${element.value}")
+        var variable = configuration.registers.getVarConfiguration(element.symbol)
+        if (variable == null) {
+            println("ERROR: Symbol ${element.symbol} not found during Set execution")
+            throw CancellationException("Error - Set")
+        } else {
+            if ((variable.addressType == AddressType.COIL || variable.addressType == AddressType.DISCRETE_INPUT) && (variable.value != "0" && variable.value != "1")) {
+                println("ERROR: Invalid value format. Symbol ${element.symbol} is of BOOL type and supports only values 0 or 1 not ${variable.value}")
+            }
+            when (variable.addressType) {
+                AddressType.HOLDING_REGISTER -> {
+                    if (variable.datatype == "FLOAT32") {
+                        val floatValue = element.value.toFloat()
+                        setHoldingRegisterFloat32(floatValue, memory, variable)
+                    } else {
+                        //Int16
+                        val intValue =  element.value.toShort()
+                        setHoldingRegisterInt16(memory, variable, intValue)
+                    }
+                }
+
+                AddressType.COIL -> {
+                    memory.forceSingleCoil(
+                        variable.address.toInt(),
+                        element.value.toBooleanFromBinary()
+                    )
+                }
+
+                AddressType.DISCRETE_INPUT -> {
+                    memory.setDiscreteInput(
+                        variable.address.toInt(),
+                        element.value.toBooleanFromBinary()
+                    )
+                }
+
+                AddressType.INPUT_REGISTER -> {
+                    memory.setInputRegister(variable.address.toInt(), element.value.toShort())
+                }
+            }
+        }
+    }
+
+    private fun setHoldingRegisterInt16(memory: PlcMemory, variable: Register, intValue: Short) {
+        memory.presetMultipleRegisters(
+            mutableListOf<Pair<Int, Short>>(
+                Pair<Int, Short>(
+                    variable.address.toInt(),
+                    intValue
+                )
+            )
+        )
+    }
+
+    private fun setHoldingRegisterFloat32(floatValue: kotlin.Float, memory: PlcMemory, variable: Register) {
+        val intValue = Float.floatToIntBits(floatValue)
+        val lowWord = intValue and 0xFFFF
+        val highWord = (intValue ushr 16) and 0xFFFF
+        memory.presetMultipleRegisters(
+            mutableListOf<Pair<Int, Short>>(
+                Pair<Int, Short>(
+                    variable.address.toInt(),
+                    lowWord.toShort()
+                ),
+                Pair<Int, Short>(
+                    variable.address.toInt() + 1,
+                    highWord.toShort()
+                ),
+            )
+        )
     }
 
 }
