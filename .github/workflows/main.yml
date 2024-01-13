@@ -1,4 +1,22 @@
-- name: Gradle Build Action
-  # You may pin to the exact commit or the version.
-  # uses: gradle/gradle-build-action@6c7537229bd2c28154565df1ba25a84a7eaefe44
-  uses: gradle/gradle-build-action@v3.0.0-beta.3          
+name: build kotlin
+on:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
+    - name: Run the Gradle package task
+      uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+      with:
+        arguments: -b ci.gradle package
