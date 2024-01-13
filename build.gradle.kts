@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id ("org.jetbrains.kotlin.kapt") version "1.4.30"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     kotlin("jvm") version "1.8.20"
     application
 }
@@ -66,4 +67,15 @@ tasks.jar {
         from(zipTree(file.absoluteFile))
     }
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+tasks {
+    shadowJar {
+        mergeServiceFiles()
+        manifest {
+            attributes(
+                "Main-Class" to "org.example.MainKt"
+            )
+        }
+    }
 }
