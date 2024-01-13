@@ -44,6 +44,7 @@ class Checksum : Callable<Int> {
         //val digest = MessageDigest.getInstance(port).digest(fileContents)
         //println(("%0" + digest.size * 2 + "x").format(BigInteger(1, digest)))
         if(simulationRandomValues) {
+            plcMemory = PlcMemory(configuration)
             modbusServer = ModbusServer(plcMemory)
         }else {
             if (file.isNotEmpty()) {
