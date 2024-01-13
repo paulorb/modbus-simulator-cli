@@ -1,3 +1,7 @@
+<picture>
+  <img src="docs/media/plclogo.jpg" width="300">
+</picture>
+
 # Modbus Simulator CLI
 
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/paulo-roberto-balbino/)
