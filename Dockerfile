@@ -11,4 +11,4 @@ FROM eclipse-temurin:17
 # Continue with your application deployment
 RUN mkdir /opt/app
 COPY --from=jre-build work/build/libs/*.jar /opt/app/
-CMD ["java", "-jar", "/opt/app/modbus-simulator-cli-1.0-SNAPSHOT-all.jar"]
+ENTRYPOINT ["java", "-jar", "/opt/app/modbus-simulator-cli-1.0-SNAPSHOT-all.jar"]

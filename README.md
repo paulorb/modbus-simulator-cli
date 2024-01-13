@@ -46,5 +46,16 @@ java -jar build/libs/modbus-simulator-cli-1.0-SNAPSHOT-all.jar -sr
 ```
 For customization options check [full documentation](https://paulorb.github.io/modbus-simulator-cli/)
 
+## Quick Start (for Docker)
+
+1. Pull the Modbus Simulator
+
+docker pull paulorb/modbus-simulator-cli
+
+2. Run the Modbus Simulator
+
+docker run --rm -p 5002:5002 paulorb/modbus-simulator-cli:v0.0.99-beta.2 -sr
+
+
 ## Author
 Contact me on [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/paulo-roberto-balbino/)
