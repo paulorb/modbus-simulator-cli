@@ -4,7 +4,10 @@
 
 # Modbus Simulator CLI
 
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/paulo-roberto-balbino/)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=paulorb_modbus-simulator-cli&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=paulorb_modbus-simulator-cli)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=paulorb_modbus-simulator-cli&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=paulorb_modbus-simulator-cli)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=paulorb_modbus-simulator-cli&metric=bugs)](https://sonarcloud.io/summary/new_code?id=paulorb_modbus-simulator-cli)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=paulorb_modbus-simulator-cli&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=paulorb_modbus-simulator-cli)
 
 Modbus simulator CLI is a high-performance modbus TCP server with customizable simulation
 
@@ -42,3 +45,6 @@ and simulation operation can be performed for each register.
 java -jar build/libs/modbus-simulator-cli-1.0-SNAPSHOT-all.jar -sr
 ```
 For customization options check [full documentation](https://paulorb.github.io/modbus-simulator-cli/)
+
+## Author
+Contact me on [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/paulo-roberto-balbino/)
