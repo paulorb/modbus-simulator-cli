@@ -97,14 +97,12 @@ class PlcSimulation(
                             println("ERROR: Add Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
                             throw CancellationException("Error - Add")
                         }
-                        //Int16   VALIDATED!
                         var intValue =  element.value.toInt()
                         intValue += currentValue.first().toInt()
                         setHoldingRegisterInt16(memory, variable, intValue.toShort())
                     }
                 }
                 AddressType.INPUT_REGISTER -> {
-                    //TODO NOT TESTED, NOT VALIDATED!!
                     val currentValue = memory.readInputRegister(variable.address.toInt(), 1)
                     val newValue = currentValue.first() + element.value.toShort()
                     memory.setInputRegister(variable.address.toInt(),newValue.toShort())
