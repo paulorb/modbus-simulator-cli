@@ -89,7 +89,7 @@ data class Linear(
 data class Sub(
     @field:XmlAttribute(required = true)
     val symbol: String,
-    @field:XmlAttribute(required = true)
+    @field:XmlValue
     val value: String,
 ){
     constructor(): this("", "")
@@ -101,10 +101,10 @@ data class Sub(
 data class Add(
     @field:XmlAttribute(required = true)
     val symbol: String,
-    @field:XmlAttribute(required = true)
+    @field:XmlValue
     val value: String,
 ){
-    constructor(): this("", "")
+    constructor(): this("", "0")
 }
 
 //<delay>100</delay>
