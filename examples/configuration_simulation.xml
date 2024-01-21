@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<device ip="0.0.0.0" port="502">
+    <configuration initializeUndefinedRegisters="true" initialValue="0">
+        <registers>
+            <register addressType="HOLDING_REGISTER" address="14" symbol="RPM_MOTOR">500</register>
+            <register addressType="HOLDING_REGISTER" address="8" datatype="FLOAT32" symbol="MOTOR_SPEED1">123.7</register>
+            <register addressType="HOLDING_REGISTER" address="10" datatype="FLOAT32" symbol="TEMPERATURE1">-12.5</register>
+            <register addressType="HOLDING_REGISTER" address="0"  datatype="INT16" symbol="RPM_MOTOR1">1</register>
+            <register addressType="HOLDING_REGISTER" address="1"  datatype="INT16" symbol="RPM_MOTOR2">-2</register>
+            <register addressType="HOLDING_REGISTER" address="2"  datatype="INT16" symbol="RPM_MOTOR3">3</register>
+            <register addressType="HOLDING_REGISTER" address="3"  datatype="INT16" symbol="RPM_MOTOR4">4</register>
+            <register addressType="HOLDING_REGISTER" address="4"  datatype="INT16" symbol="RPM_MOTOR5">5</register>
+            <register addressType="HOLDING_REGISTER" address="5"  datatype="INT16" symbol="RPM_MOTOR6">6</register>
+            <register addressType="HOLDING_REGISTER" address="6"  datatype="INT16" symbol="RPM_MOTOR7">7</register>
+            <register addressType="HOLDING_REGISTER" address="7"  datatype="INT16" symbol="RPM_MOTOR8">8</register>
+            <register addressType="COIL" address="1" symbol="RELAYON">1</register>
+            <register addressType="COIL" address="2" symbol="RELAYON2">1</register>
+            <register addressType="COIL" address="3" symbol="RELAYON3">1</register>
+            <register addressType="DISCRETE_INPUT" address="0" symbol="RELAY_STATUS">1</register>
+            <register addressType="DISCRETE_INPUT" address="1" symbol="RELAY_STATUS2">0</register>
+            <register addressType="DISCRETE_INPUT" address="2" symbol="RELAY_STATUS3">1</register>
+            <register addressType="DISCRETE_INPUT" address="3" symbol="RELAY_STATUS4">0</register>
+            <register addressType="DISCRETE_INPUT" address="4" symbol="RELAY_STATUS5">1</register>
+            <register addressType="INPUT_REGISTER" address="0" symbol="RPM">1</register>
+            <register addressType="INPUT_REGISTER" address="2" symbol="RPM2">2</register>
+            <register addressType="INPUT_REGISTER" address="4" symbol="RPM3">3</register>
+            <register addressType="INPUT_REGISTER" address="6" symbol="RPM4">4</register>
+            <register addressType="INPUT_REGISTER" address="8" symbol="RPM5">5</register>
+            <register addressType="INPUT_REGISTER" address="10" symbol="RPM6">6</register>
+            <register addressType="INPUT_REGISTER" address="12" symbol="RPM7">7</register>
+        </registers>
+    </configuration>
+    <simulation plcScanTime="1000">
+        <delay>500</delay>
+        <set symbol="RPM">50</set>
+        <set symbol="RELAYON">0</set>
+        <set symbol="RELAY_STATUS">0</set>
+        <set symbol="RPM_MOTOR">100</set>
+        <set symbol="MOTOR_SPEED1">100.5</set>
+        <random symbol="TEMPERATURE1" valueMin="-50.0" valueMax="10.0"/>
+        <delay>500</delay>
+        <set symbol="RPM">60</set>
+        <set symbol="MOTOR_SPEED1">190.5</set>
+        <linear symbol="RPM_MOTOR1" a="5" b="4" minX="500" maxX="1000" replay="false" step="3"/>
+        <set symbol="RELAYON">1</set>
+        <set symbol="RELAY_STATUS">1</set>
+        <set symbol="RPM_MOTOR">400</set>
+        <delay>1000</delay>
+        <add symbol="MOTOR_SPEED1">15</add>
+        <add symbol="RPM7">1</add>
+        <delay>1000</delay>
+        <add symbol="MOTOR_SPEED1">15</add>
+        <add symbol="RPM7">1</add>
+        <delay>1000</delay>
+        <add symbol="MOTOR_SPEED1">15</add>
+        <add symbol="RPM7">1</add>
+        <delay>1000</delay>
+        <add symbol="MOTOR_SPEED1">15</add>
+        <add symbol="RPM7">1</add>
+        <delay>1000</delay>
+        <add symbol="MOTOR_SPEED1">15</add>
+        <add symbol="RPM7">1</add>
+        <delay>1000</delay>
+        <add symbol="MOTOR_SPEED1">15</add>
+        <add symbol="RPM7">1</add>
+        <delay>1000</delay>
+        <add symbol="RPM_MOTOR4">12</add>
+        <sub symbol="RPM_MOTOR1">12</sub>
+    </simulation>
+</device>
