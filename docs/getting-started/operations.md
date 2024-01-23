@@ -30,3 +30,18 @@ Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
 *For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
 
 
+## Sub
+Sub (as the name implies) subtract a certain value of a variable, like the example below:
+
+```xml
+ <sub symbol="MOTOR_SPEED1">1.12</sub>
+```
+
+Both **symbol** and **value** are mandatory fields. **value** can be of type *FLOAT32* , *INT16*  which must
+follow the same type of the specified **symbol** definition.
+
+Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
+
+*For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
+
+
