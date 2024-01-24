@@ -22,7 +22,7 @@ class PlcSimulation(
                             }
 
                             is Random -> {
-                                println("Random symbol ${element.symbol} valueMax ${element.valueMax} valueMin ${element.valueMin}")
+                                randomOperation(element, configuration, memory)
                             }
 
                             is Delay -> {
