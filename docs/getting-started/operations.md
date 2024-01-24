@@ -45,3 +45,17 @@ Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
 *For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
 
 
+## Random
+Random generates new random values each time it executes
+
+```xml
+ <random symbol="TEMPERATURE1" valueMin="-50.0" valueMax="10.0"/>
+```
+
+Both **symbol** and **valueMin** and **valueMax** are mandatory fields. Both values can be of type *FLOAT32* , *INT16*  which must
+follow the same type of the specified **symbol** definition.
+
+Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
+
+*For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
+
