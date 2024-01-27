@@ -63,7 +63,7 @@ class Simulation(
 }
 
 
-// <linear symbol="RPM_MOTOR1" a="5" b="" minX="500" maxX="1000" replay="false" step="3"/>
+// <linear symbol="RPM_MOTOR1" a="5" b="3" startX="500" endX="1000" replay="false" step="3"/>
 @XmlRootElement(name="linear")
 data class Linear(
     @field:XmlAttribute(required = true)
@@ -73,9 +73,9 @@ data class Linear(
     @field:XmlAttribute(required = true)
     val b: Double,
     @field:XmlAttribute(required = true)
-    val minX: Double,
+    val startX: Double,
     @field:XmlAttribute(required = true)
-    val maxX: Double,
+    val endX: Double,
     @field:XmlAttribute(required = true)
     val replay: Boolean,
     @field:XmlAttribute(required = false)

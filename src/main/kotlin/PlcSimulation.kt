@@ -7,7 +7,7 @@ class PlcSimulation(
     memory: PlcMemory,
     coroutineScope: CoroutineScope
 ) {
-
+    val linearOperations = LinearOperation()
     init {
         var simulationConfiguration = configurationParser.getConfiguredDevice().simulation
         var configuration = configurationParser.getConfiguredDevice().configuration
@@ -31,7 +31,7 @@ class PlcSimulation(
                             }
 
                             is Linear -> {
-                                //TODO
+                                linearOperations.process(element, configuration, memory)
                             }
 
                             is Add -> {
