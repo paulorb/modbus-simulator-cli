@@ -26,12 +26,12 @@ Please see the [project website](https://paulorb.github.io/modbus-simulator-cli/
 The table below shows the supported registers and which datatype
 and simulation operation can be performed for each register.
 
-| Register               | Datatype       | Operations            |
-|------------------------|----------------|-----------------------|
-| Coils (0x)             | BOOL           | Set                   |
-| Input register (1x)    | BOOL           | Set                   |
-| Discrete Input (3x)    | INT16          | Set, Add, Sub, Random |
-| Holding Registers (4x) | INT16, FLOAT32 | Set, Add, Sub, Random |
+| Register               | Datatype       | Operations                    |
+|------------------------|----------------|-------------------------------|
+| Coils (0x)             | BOOL           | Set                           |
+| Input register (1x)    | BOOL           | Set                           |
+| Discrete Input (3x)    | INT16          | Set, Add, Sub, Random, Linear |
+| Holding Registers (4x) | INT16, FLOAT32 | Set, Add, Sub, Random, Linear |
 
 ## Quick Start
 1. Compile with gradle and generate fat Jar
