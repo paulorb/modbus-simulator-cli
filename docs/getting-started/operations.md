@@ -59,3 +59,25 @@ Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
 
 *For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
 
+
+## Linear
+Generates new values following a linear equation (ax + b)
+
+```
+<linear symbol="TEMPERATURE_MOTOR1" a="3" b="2" startX="0" endX="12" replay="true" step="1.5"/>
+<linear symbol="TEMPERATURE_MOTOR2" a="3" b="2" startX="12" endX="0" replay="true" step="1.5"/>
+```
+
+Both **symbol** , **startX** , **endX**, **a**, **b** and **step** are mandatory fields. Both values can be of type *FLOAT32* , *INT16*  which must
+follow the same type of the specified **symbol** definition.
+**step** must be a positive value of type INT16 or FLOAT32
+
+On the first example (xml above) x is starting in 0 and going up until 12 (<=) with a step of 1.5
+so the x values for the equation will be [0 1.5 3 4.5 6 7.5 9 10.5 12].
+
+Second example is the oposite, note that startX is greater than endX, so the x values applied on this equation will be
+[12 10.5 9 7.5 6 4.5 3 1.5 0], also note that the **step** is positive, what is different is the **startX** and **endX** to indicate order.
+
+Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
+
+*For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
