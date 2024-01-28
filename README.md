@@ -13,7 +13,6 @@ Modbus simulator CLI is a high-performance modbus TCP server with customizable s
 
 Please see the [project website](https://paulorb.github.io/modbus-simulator-cli/) for documentation
 
-> :warning: **This is a work in progress**:
 
 ## Features
 * High performance TCP Server
