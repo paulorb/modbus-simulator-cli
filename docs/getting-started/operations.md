@@ -81,3 +81,20 @@ Second example is the oposite, note that startX is greater than endX, so the x v
 Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
 
 *For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
+
+
+## Csv
+Uses a CSV as data source based on the specified column.
+
+```
+<csv symbol="TEMPERATURE_MOTOR3" file="test_data.csv" column="1" replay="true"/>
+<csv symbol="TEMPERATURE_MOTOR4" file="test_data.csv" column="2" step="2" startRow="2" endRow="5" replay="true"/>
+```
+
+Both **symbol** , **file** , **column** are mandatory fields. 
+
+**column** must have the number of the column to be read, please notice that the values on the CSV must
+follow the same type of the specified **symbol** definition.
+**step** must be a positive value of type INT16 which is related to the row index
+
+Each time this operation is executed it will get the next row of the column specified and set to the specified symbol. 
