@@ -7,6 +7,8 @@
             <register addressType="HOLDING_REGISTER" address="10" datatype="FLOAT32" symbol="TEMPERATURE1">-12.5</register>
             <register addressType="HOLDING_REGISTER" address="12" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR1">-12.5</register>
             <register addressType="HOLDING_REGISTER" address="14" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR2">-12.5</register>
+            <register addressType="HOLDING_REGISTER" address="16" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR3">-12.5</register>
+            <register addressType="HOLDING_REGISTER" address="18" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR4">-12.5</register>
             <register addressType="HOLDING_REGISTER" address="1"  datatype="INT16" symbol="RPM_MOTOR1">1</register>
             <register addressType="HOLDING_REGISTER" address="2"  datatype="INT16" symbol="RPM_MOTOR2">-2</register>
             <register addressType="HOLDING_REGISTER" address="3"  datatype="INT16" symbol="RPM_MOTOR3">3</register>
@@ -45,6 +47,8 @@
         <set symbol="MOTOR_SPEED1">190.5</set>
         <linear symbol="TEMPERATURE_MOTOR1" a="3" b="2" startX="0" endX="12" replay="true" step="1.5"/>
         <linear symbol="TEMPERATURE_MOTOR2" a="3" b="2" startX="12" endX="0" replay="true" step="1.5"/>
+        <csv symbol="TEMPERATURE_MOTOR3" file="test_data.csv" column="1" replay="true"/>
+        <csv symbol="TEMPERATURE_MOTOR4" file="test_data.csv" column="2" step="2" startRow="2" endRow="5" replay="true"/>
         <set symbol="RELAYON">1</set>
         <set symbol="RELAY_STATUS">1</set>
         <set symbol="RPM_MOTOR">400</set>

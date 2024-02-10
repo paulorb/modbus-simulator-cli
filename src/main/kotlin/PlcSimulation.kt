@@ -8,6 +8,7 @@ class PlcSimulation(
     coroutineScope: CoroutineScope
 ) {
     val linearOperations = LinearOperation()
+    val csvOperations = CsvOperation()
     init {
         var simulationConfiguration = configurationParser.getConfiguredDevice().simulation
         var configuration = configurationParser.getConfiguredDevice().configuration
@@ -42,6 +43,10 @@ class PlcSimulation(
                                 subOperation(element, configuration, memory)
                             }
 
+                            is Csv -> {
+                                csvOperations.process(element, configuration, memory)
+                            }
+
                             else -> throw UnsupportedOperationException("Unknown simulation step type")
                         }
                     }
@@ -52,8 +57,8 @@ class PlcSimulation(
                         delay(simulationConfiguration.plcScanTime - elapsedTime)
                     }
                 }
-            } catch (e: CancellationException) {
-                println("Job: Caught CancellationException - ${e.message}")
+            } catch (e: Exception) {
+                println("Exception - ${e.message}")
              } finally {
                  println("Job: Finally block, cleaning up resources")
             }

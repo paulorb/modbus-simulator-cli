@@ -7,13 +7,17 @@ import javax.xml.bind.annotation.*
 
 class ConfigurationParser {
 
-    private var fileName: String = ""
+    companion object {
+        var fileName: String = ""
+    }
+
+
     fun setFileName(file: String) {
         fileName = file
     }
     private fun load(): Device? {
         try {
-            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java)
+            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java)
             val unmarshaller = context.createUnmarshaller()
             if(fileName.isEmpty()) {
                 val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
@@ -62,6 +66,27 @@ class Simulation(
 
 }
 
+
+//<csv symbol="TEMPERATURE_MOTOR4" file="test.csv" column="0" step="2" startRow="2" endRow="100" replay="true"/>
+@XmlRootElement(name="csv")
+data class Csv(
+    @field:XmlAttribute(required = true)
+    val symbol: String,
+    @field:XmlAttribute(required = true)
+    val file: String,
+    @field:XmlAttribute(required = true)
+    val column: Int,
+    @field:XmlAttribute(required = false)
+    val step: Int,
+    @field:XmlAttribute(required = false)
+    val startRow: Int,
+    @field:XmlAttribute(required = false)
+    val endRow: Int,
+    @field:XmlAttribute(required = false)
+    val replay: Boolean
+){
+    constructor(): this("", "", 0,1,0,-1, false)
+}
 
 // <linear symbol="RPM_MOTOR1" a="5" b="3" startX="500" endX="1000" replay="false" step="3"/>
 @XmlRootElement(name="linear")

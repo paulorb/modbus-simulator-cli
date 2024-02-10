@@ -27,6 +27,7 @@ dependencies {
     implementation("com.sun.xml.bind:jaxb-impl:2.3.3")
     implementation ("com.github.paulorb:modbus-kt:1.0.11")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.apache.commons:commons-csv:1.10.0")
     testImplementation(kotlin("test"))
 }
 

@@ -28,30 +28,6 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
                 AddressType.INPUT_REGISTER -> inputRegister[register.address.toInt()] =  register.value.toShort()
             }
         }
-        var simulationElements = device.simulation.randomElements
-        simulationElements?.forEach {element ->
-            when(element){
-                is Set -> {
-                    println("Set symbol ${element.symbol} value ${element.value}")
-                }
-                is Random -> {
-                    println("Random symbol ${element.symbol} valueMax ${element.valueMax} valueMin ${element.valueMin}")
-                }
-                is Delay -> {
-                    println("Delay value ${element.value}")
-                }
-                is Linear -> {
-                    //TODO
-                }
-                is Add -> {
-                    //TODO
-                }
-                is Sub -> {
-                    //TODO
-                }
-                else -> throw UnsupportedOperationException("Unknown simulation step type")
-            }
-        }
     }
 
     //0x
