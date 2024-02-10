@@ -98,3 +98,7 @@ follow the same type of the specified **symbol** definition.
 **step** must be a positive value of type INT16 which is related to the row index
 
 Each time this operation is executed it will get the next row of the column specified and set to the specified symbol. 
+
+Supported registers: HOLDING_REGISTER, INPUT_REGISTER
+
+For INPUT_REGISTER type FLOAT32 is not supported!
