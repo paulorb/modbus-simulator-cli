@@ -17,7 +17,7 @@ class ConfigurationParser {
     }
     private fun load(): Device? {
         try {
-            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java)
+            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java)
             val unmarshaller = context.createUnmarshaller()
             if(fileName.isEmpty()) {
                 val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
@@ -66,6 +66,21 @@ class Simulation(
 
 }
 
+//<ifEqual symbol="TEMP" value="12.4">
+//   <sub symbol="MOTOR_SPEED1">12</sub>
+//   any other operation ...
+//</ifEqual>
+@XmlRootElement(name="ifEqual")
+data class IfEqual(
+    @field:XmlAttribute(required = true)
+    val symbol: String,
+    @field:XmlAttribute(required = true)
+    val value: String,
+    @XmlAnyElement(lax = true)
+    var randomElements: List<Any>
+){
+    constructor() : this("","",mutableListOf())
+}
 
 //<csv symbol="TEMPERATURE_MOTOR4" file="test.csv" column="0" step="2" startRow="2" endRow="100" replay="true"/>
 @XmlRootElement(name="csv")

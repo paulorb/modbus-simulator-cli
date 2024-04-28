@@ -2,10 +2,14 @@ package operations
 
 
 import Configuration
+import IfEqual
 import PlcMemory
 import Sub
 import java.util.concurrent.CancellationException
 import toBooleanFromBinary
+
+
+
 
 fun subOperation(element: Sub, configuration: Configuration, memory: PlcMemory){
     println("Sub symbol ${element.symbol} value ${element.value}")

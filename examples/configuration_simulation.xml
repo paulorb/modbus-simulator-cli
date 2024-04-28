@@ -45,6 +45,9 @@
         <delay>500</delay>
         <set symbol="RPM">60</set>
         <set symbol="MOTOR_SPEED1">190.5</set>
+        <ifEqual symbol="MOTOR_SPEED1" value="190.5">
+            <set symbol="RPM">70</set>
+        </ifEqual>
         <linear symbol="TEMPERATURE_MOTOR1" a="3" b="2" startX="0" endX="12" replay="true" step="1.5"/>
         <linear symbol="TEMPERATURE_MOTOR2" a="3" b="2" startX="12" endX="0" replay="true" step="1.5"/>
         <csv symbol="TEMPERATURE_MOTOR3" file="test_data.csv" column="1" replay="true"/>
