@@ -9,6 +9,7 @@
             <register addressType="HOLDING_REGISTER" address="14" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR2">-12.5</register>
             <register addressType="HOLDING_REGISTER" address="16" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR3">-12.5</register>
             <register addressType="HOLDING_REGISTER" address="18" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR4">-12.5</register>
+            <register addressType="HOLDING_REGISTER" address="20" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR5">-12.5</register>
             <register addressType="HOLDING_REGISTER" address="1"  datatype="INT16" symbol="RPM_MOTOR1">1</register>
             <register addressType="HOLDING_REGISTER" address="2"  datatype="INT16" symbol="RPM_MOTOR2">-2</register>
             <register addressType="HOLDING_REGISTER" address="3"  datatype="INT16" symbol="RPM_MOTOR3">3</register>
@@ -36,7 +37,6 @@
     </configuration>
     <simulation plcScanTime="1000">
         <delay>500</delay>
-        <set symbol="RPM">50</set>
         <set symbol="RELAYON">0</set>
         <set symbol="RELAY_STATUS">0</set>
         <set symbol="RPM_MOTOR">100</set>
@@ -45,8 +45,23 @@
         <delay>500</delay>
         <set symbol="RPM">60</set>
         <set symbol="MOTOR_SPEED1">190.5</set>
-        <ifEqual symbol="MOTOR_SPEED1" value="190.5">
-            <set symbol="RPM">70</set>
+        <ifEqual symbol="RPM_MOTOR1" value="1">
+            <set symbol="RPM_MOTOR1">777</set>
+            <ifEqual symbol="RPM_MOTOR1" value="777">
+                <set symbol="RPM_MOTOR1">888</set>
+                <ifEqual symbol="RPM_MOTOR1" value="888">
+                    <set symbol="RPM_MOTOR1">999</set>
+                </ifEqual>
+            </ifEqual>
+        </ifEqual>
+        <ifEqual symbol="TEMPERATURE_MOTOR5" value="-12.5">
+            <set symbol="TEMPERATURE_MOTOR5">777</set>
+            <ifEqual symbol="TEMPERATURE_MOTOR5" value="777">
+                <set symbol="TEMPERATURE_MOTOR5">888</set>
+                <ifEqual symbol="TEMPERATURE_MOTOR5" value="888">
+                    <set symbol="TEMPERATURE_MOTOR5">999</set>
+                </ifEqual>
+            </ifEqual>
         </ifEqual>
         <linear symbol="TEMPERATURE_MOTOR1" a="3" b="2" startX="0" endX="12" replay="true" step="1.5"/>
         <linear symbol="TEMPERATURE_MOTOR2" a="3" b="2" startX="12" endX="0" replay="true" step="1.5"/>
