@@ -17,7 +17,7 @@ class ConfigurationParser {
     }
     private fun load(): Device? {
         try {
-            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java)
+            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java, Parameters::class.java, Parameter::class.java)
             val unmarshaller = context.createUnmarshaller()
             if(fileName.isEmpty()) {
                 val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
@@ -47,12 +47,14 @@ data class Device(
     var ip: String,
     @field:XmlAttribute(required = false)
     var port: String,
+    @field:XmlElement(required = false)
+    val parameters: Parameters,
     @field:XmlElement
     val configuration: Configuration,
     @field:XmlElement
     val simulation: Simulation,
     ){
-    constructor() : this("", "", Configuration(true,0, Registers(mutableListOf())), Simulation(1000,mutableListOf()))
+    constructor() : this("", "", Parameters(), Configuration(true,0, Registers(mutableListOf())), Simulation(1000,mutableListOf()))
 }
 
 @XmlAccessorType(XmlAccessType.NONE)
@@ -66,6 +68,21 @@ class Simulation(
 
 }
 
+//<ifEqual symbol="TEMP" value="12.4">
+//   <sub symbol="MOTOR_SPEED1">12</sub>
+//   any other operation ...
+//</ifEqual>
+@XmlRootElement(name="ifEqual")
+data class IfEqual(
+    @field:XmlAttribute(required = true)
+    val symbol: String,
+    @field:XmlAttribute(required = true)
+    val value: String,
+    @XmlAnyElement(lax = true)
+    var randomElements: List<Any>
+){
+    constructor() : this("","",mutableListOf())
+}
 
 //<csv symbol="TEMPERATURE_MOTOR4" file="test.csv" column="0" step="2" startRow="2" endRow="100" replay="true"/>
 @XmlRootElement(name="csv")
@@ -162,6 +179,34 @@ data class Set(
     val value: String
 ){
     constructor(): this("", "0")
+}
+
+@XmlAccessorType(XmlAccessType.NONE)
+data class Parameters(
+    @field:XmlElement(name = "parameter")
+    val parameters: MutableList<Parameter>
+) {
+    constructor(): this(mutableListOf())
+    fun getParametersConfiguration(symbolName: String) : Parameter? {
+        parameters.forEach {register ->
+            if(register.symbol == symbolName){
+                return register
+            }
+        }
+        return null
+    }
+}
+
+@XmlAccessorType(XmlAccessType.NONE)
+data class Parameter(
+    @XmlAttribute
+    val symbol: String,
+    @XmlAttribute(required = true)
+    val datatype: String,
+    @XmlValue
+    val value: String
+) {
+    constructor() : this( "","","")
 }
 
 data class Configuration(
