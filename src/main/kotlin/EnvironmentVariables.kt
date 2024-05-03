@@ -20,7 +20,7 @@ init {
                 if(jsonParameter.datatype == "BOOL" && envParameter.value != "0" &&  envParameter.value != "1"){
                     throw InvalidPropertiesFormatException("Environment variable for parameter ${jsonParameter.symbol} has value ${envParameter.value} which does not conform with its datatype BOOL")
                 }
-                enviromentVars.add(EnvParameter(envParameter.symbol, envParameter.value))
+                enviromentVars.add(EnvParameter(envParameter.symbol, envParameter.value, envParameter.type))
                 found = true
             }
         }
@@ -28,7 +28,7 @@ init {
             if (jsonParameter.value.isEmpty()) {
                 throw InvalidPropertiesFormatException("Environment variable for parameter ${jsonParameter.symbol} not found, json definition  do not have a default value, which makes it mandatory")
             } else {
-                enviromentVars.add(EnvParameter(jsonParameter.symbol, jsonParameter.value))
+                enviromentVars.add(EnvParameter(jsonParameter.symbol, jsonParameter.value,  jsonParameter.datatype))
             }
         }
     }

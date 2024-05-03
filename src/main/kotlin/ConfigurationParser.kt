@@ -17,7 +17,7 @@ class ConfigurationParser {
     }
     private fun load(): Device? {
         try {
-            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java)
+            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java, Parameters::class.java, Parameter::class.java)
             val unmarshaller = context.createUnmarshaller()
             if(fileName.isEmpty()) {
                 val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
@@ -181,8 +181,9 @@ data class Set(
     constructor(): this("", "0")
 }
 
+@XmlAccessorType(XmlAccessType.NONE)
 data class Parameters(
-    @field:XmlElement(name = "register")
+    @field:XmlElement(name = "parameter")
     val parameters: MutableList<Parameter>
 ) {
     constructor(): this(mutableListOf())
@@ -196,6 +197,7 @@ data class Parameters(
     }
 }
 
+@XmlAccessorType(XmlAccessType.NONE)
 data class Parameter(
     @XmlAttribute
     val symbol: String,

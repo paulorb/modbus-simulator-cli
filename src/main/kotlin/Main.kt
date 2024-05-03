@@ -9,7 +9,8 @@ import kotlin.system.exitProcess
 
 data class EnvParameter(
     var symbol : String,
-    var value: String
+    var value: String,
+    var type: String
 )
 @Command(name = "modbussimulatorcli", mixinStandardHelpOptions = true, version = ["CLI 0.0.99"],
     description = ["Modbus TCP Simulator"])
@@ -41,7 +42,7 @@ class Checksum : Callable<Int> {
                 if(parts.count() != 2){
                     throw InvalidPropertiesFormatException("Environment parameter does not follow the format NAME=VALUE")
                 }else{
-                    envParameter.add(EnvParameter(parts[0],parts[1]))
+                    envParameter.add(EnvParameter(parts[0],parts[1], ""))
                 }
             }
         }
@@ -71,7 +72,8 @@ class Checksum : Callable<Int> {
             }
             // if not set default, reading internal xml
             plcMemory = PlcMemory(configuration)
-            plcSimulation = PlcSimulation(configuration, plcMemory,EnvironmentVariables(environmentParameters, configuration), mainCoroutineScope)
+            var envVariables = EnvironmentVariables(environmentParameters, configuration)
+            plcSimulation = PlcSimulation(configuration, plcMemory,envVariables, mainCoroutineScope)
             modbusServer = ModbusServer(plcMemory)
         }
 

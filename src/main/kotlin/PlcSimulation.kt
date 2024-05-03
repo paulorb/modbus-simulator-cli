@@ -89,10 +89,37 @@ class PlcSimulation(
         var value = processValue(element.value)
         var variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {
+            val envVar = parameters.resolveEnvVar(element.symbol)
+            if(envVar != null){
+                if(envVar.type == "FLOAT32"){
+                    if(envVar.value.toFloat() != value.toFloat()){
+                        //abort and continue
+                        //since the value does not match the condition
+                        return
+                    }
+                    //execute operations
+                    element.randomElements.forEach { subElement ->
+                        processOperationElement(subElement, configuration, memory)
+                    }
+                }else
+                    if(envVar.type == "INT16" || envVar.type == "BOOL" ){
+                        if(envVar.value.toInt() != value.toInt()){
+                            //abort and continue
+                            //since the value does not match the condition
+                            return
+                        }
+                        //execute operations
+                        element.randomElements.forEach { subElement ->
+                            processOperationElement(subElement, configuration, memory)
+                        }
+                    }else {
+                        println("ERROR: Symbol ${element.symbol} has invalid datatype during IfEqual execution")
+                    }
 
-
-            println("ERROR: Symbol ${element.symbol} not found during IfEqual execution")
-            throw CancellationException("Error - IfEqual")
+            }else {
+                println("ERROR: Symbol ${element.symbol} not found during IfEqual execution")
+                throw CancellationException("Error - IfEqual")
+            }
         } else {
 
             when (variable.addressType) {

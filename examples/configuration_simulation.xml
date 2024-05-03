@@ -4,7 +4,6 @@
         <parameter symbol="PARAM_CURRENT_SELECTION" datatype="INT16">15</parameter>
         <parameter symbol="PARAM_SET_TEMPERATURE" datatype="FLOAT32">5.45</parameter>
         <parameter symbol="PARAM_ENABLE_FAST_MODE" datatype="BOOL">1</parameter>
-        <parameter symbol="PARAM_DISABLE_MAIN_CONVEYOR" datatype="BOOL"/>
     </parameters>
     <configuration initializeUndefinedRegisters="true" initialValue="0">
         <registers>
@@ -24,7 +23,7 @@
             <register addressType="HOLDING_REGISTER" address="6"  datatype="INT16" symbol="RPM_MOTOR6">6</register>
             <register addressType="HOLDING_REGISTER" address="7"  datatype="INT16" symbol="RPM_MOTOR7">7</register>
             <register addressType="HOLDING_REGISTER" address="8"  datatype="INT16" symbol="RPM_MOTOR8">8</register>
-            <register addressType="HOLDING_REGISTER" address="9"  datatype="INT16" symbol="RPM_MOTOR9">9</register>
+            <register addressType="HOLDING_REGISTER" address="22"  datatype="INT16" symbol="RPM_MOTOR9">9</register>
             <register addressType="COIL" address="1" symbol="RELAYON">1</register>
             <register addressType="COIL" address="2" symbol="RELAYON2">1</register>
             <register addressType="COIL" address="3" symbol="RELAYON3">1</register>
