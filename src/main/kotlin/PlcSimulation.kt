@@ -1,15 +1,21 @@
 import kotlinx.coroutines.*
 import operations.*
 import java.lang.Float
+import java.rmi.NotBoundException
+import java.util.*
 import java.util.concurrent.CancellationException
 
 class PlcSimulation(
-    configurationParser: ConfigurationParser,
+    private val configurationParser: ConfigurationParser,
     memory: PlcMemory,
+    private val parameters: EnvironmentVariables,
     coroutineScope: CoroutineScope
-) {
+): BaseOperation(parameters,configurationParser.getConfiguredDevice().configuration ) {
     val linearOperations = LinearOperation()
     val csvOperations = CsvOperation()
+    val addOperation = AddOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
+    val setOperation = SetOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
+    val subOperation = SubOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
     init {
         var simulationConfiguration = configurationParser.getConfiguredDevice().simulation
         var configuration = configurationParser.getConfiguredDevice().configuration
@@ -39,7 +45,7 @@ class PlcSimulation(
     suspend fun processOperationElement(element: Any, configuration: Configuration, memory: PlcMemory) {
         when (element) {
             is Set -> {
-                setOperation(element, configuration, memory)
+                setOperation.setOperation(element)
             }
 
             is Random -> {
@@ -56,11 +62,11 @@ class PlcSimulation(
             }
 
             is Add -> {
-                addOperation(element, configuration, memory)
+                addOperation.addOperation(element)
             }
 
             is Sub -> {
-                subOperation(element, configuration, memory)
+                subOperation.subOperation(element)
             }
 
             is Csv -> {
@@ -77,10 +83,14 @@ class PlcSimulation(
 
 
 
+
     suspend fun ifEqual(element: IfEqual, configuration: Configuration, memory: PlcMemory) {
         println("IfEqual symbol ${element.symbol} value ${element.value}")
+        var value = processValue(element.value)
         var variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {
+
+
             println("ERROR: Symbol ${element.symbol} not found during IfEqual execution")
             throw CancellationException("Error - IfEqual")
         } else {
@@ -102,7 +112,7 @@ class PlcSimulation(
                         val currentFloatValue = java.lang.Float.intBitsToFloat(intValue)
 
                         //compare
-                        if(currentFloatValue != element.value.toFloat()){
+                        if(currentFloatValue != value.toFloat()){
                             //abort and continue
                             //since the value does not match the condition
                             return
@@ -120,7 +130,7 @@ class PlcSimulation(
                             throw CancellationException("Error - IfEqual")
                         }
                         //compare
-                        if(currentValue.first().toInt() != element.value.toInt()){
+                        if(currentValue.first().toInt() != value.toInt()){
                             //abort and continue
                             //since the value does not match the condition
                             return
@@ -139,7 +149,7 @@ class PlcSimulation(
                         throw CancellationException("Error - IfEqual")
                     }
                     //compare
-                    if( currentValue.first().toShort() != element.value.toShort()){
+                    if( currentValue.first().toShort() != value.toShort()){
                         //abort and continue
                         //since the value does not match the condition
                         return
@@ -159,7 +169,7 @@ class PlcSimulation(
                         throw CancellationException("Error - IfEqual")
                     }
                     //compare
-                    if( currentValue.first() != element.value.toBoolean()){
+                    if( currentValue.first() != value.toBoolean()){
                         //abort and continue
                         //since the value does not match the condition
                         return

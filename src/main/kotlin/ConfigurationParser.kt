@@ -47,12 +47,14 @@ data class Device(
     var ip: String,
     @field:XmlAttribute(required = false)
     var port: String,
+    @field:XmlElement(required = false)
+    val parameters: Parameters,
     @field:XmlElement
     val configuration: Configuration,
     @field:XmlElement
     val simulation: Simulation,
     ){
-    constructor() : this("", "", Configuration(true,0, Registers(mutableListOf())), Simulation(1000,mutableListOf()))
+    constructor() : this("", "", Parameters(), Configuration(true,0, Registers(mutableListOf())), Simulation(1000,mutableListOf()))
 }
 
 @XmlAccessorType(XmlAccessType.NONE)
@@ -177,6 +179,32 @@ data class Set(
     val value: String
 ){
     constructor(): this("", "0")
+}
+
+data class Parameters(
+    @field:XmlElement(name = "register")
+    val parameters: MutableList<Parameter>
+) {
+    constructor(): this(mutableListOf())
+    fun getParametersConfiguration(symbolName: String) : Parameter? {
+        parameters.forEach {register ->
+            if(register.symbol == symbolName){
+                return register
+            }
+        }
+        return null
+    }
+}
+
+data class Parameter(
+    @XmlAttribute
+    val symbol: String,
+    @XmlAttribute(required = true)
+    val datatype: String,
+    @XmlValue
+    val value: String
+) {
+    constructor() : this( "","","")
 }
 
 data class Configuration(

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="US-ASCII" ?>
 <device ip="0.0.0.0" port="502">
+    <parameters>
+        <parameter symbol="PARAM_CURRENT_SELECTION" datatype="INT16">15</parameter>
+        <parameter symbol="PARAM_SET_TEMPERATURE" datatype="FLOAT32">5.45</parameter>
+        <parameter symbol="PARAM_ENABLE_FAST_MODE" datatype="BOOL">1</parameter>
+        <parameter symbol="PARAM_DISABLE_MAIN_CONVEYOR" datatype="BOOL"/>
+    </parameters>
     <configuration initializeUndefinedRegisters="true" initialValue="0">
         <registers>
             <register addressType="HOLDING_REGISTER" address="14" symbol="RPM_MOTOR">500</register>
@@ -18,6 +24,7 @@
             <register addressType="HOLDING_REGISTER" address="6"  datatype="INT16" symbol="RPM_MOTOR6">6</register>
             <register addressType="HOLDING_REGISTER" address="7"  datatype="INT16" symbol="RPM_MOTOR7">7</register>
             <register addressType="HOLDING_REGISTER" address="8"  datatype="INT16" symbol="RPM_MOTOR8">8</register>
+            <register addressType="HOLDING_REGISTER" address="9"  datatype="INT16" symbol="RPM_MOTOR9">9</register>
             <register addressType="COIL" address="1" symbol="RELAYON">1</register>
             <register addressType="COIL" address="2" symbol="RELAYON2">1</register>
             <register addressType="COIL" address="3" symbol="RELAYON3">1</register>
@@ -62,6 +69,9 @@
                     <set symbol="TEMPERATURE_MOTOR5">999</set>
                 </ifEqual>
             </ifEqual>
+        </ifEqual>
+        <ifEqual symbol="PARAM_CURRENT_SELECTION" value="15">
+            <set symbol="RPM_MOTOR9">15</set>
         </ifEqual>
         <linear symbol="TEMPERATURE_MOTOR1" a="3" b="2" startX="0" endX="12" replay="true" step="1.5"/>
         <linear symbol="TEMPERATURE_MOTOR2" a="3" b="2" startX="12" endX="0" replay="true" step="1.5"/>
