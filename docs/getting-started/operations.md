@@ -122,3 +122,5 @@ Example using a parameter as a value
             <set symbol="MOTOR5_RPM">0</set>        
   </ifEqual>
 ```
+
+Please note the **symbol** and **value** datatype needs to match.
