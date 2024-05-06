@@ -102,3 +102,23 @@ Each time this operation is executed it will get the next row of the column spec
 Supported registers: HOLDING_REGISTER, INPUT_REGISTER
 
 For INPUT_REGISTER type FLOAT32 is not supported!
+
+## If equal
+Used for comparison, every operation inside the ifequal body will be executed
+
+```
+  <ifEqual symbol="TEMPERATURE_MOTOR5" value="-12.5">
+            <set symbol="MOTOR5_RPM">0</set>        
+  </ifEqual>
+```
+
+Both **symbol** and **value** are mandatory fields. Both can have an atomic value or a reference to a symbol (which can refer to a register or a parameter)
+
+Supported registers: HOLDING_REGISTER, INPUT_REGISTER, COIL and PARAMETER
+
+Example using a parameter as a value
+```
+  <ifEqual symbol="TEMPERATURE_MOTOR5" value="PARAM_DEFINED_TEMPERATURE">
+            <set symbol="MOTOR5_RPM">0</set>        
+  </ifEqual>
+```
