@@ -18,6 +18,7 @@ nav:
       - Overview: index.md
       - Quick start: getting-started/quick-start.md
       - Operations: getting-started/operations.md
+      - Input parameters: getting-started/input-parameters.md
       - License: getting-started/license.md
       - Contributing: getting-started/contributing.md
 
