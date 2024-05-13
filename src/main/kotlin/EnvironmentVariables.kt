@@ -20,7 +20,7 @@ init {
                 if(jsonParameter.datatype == "BOOL" && envParameter.value != "0" &&  envParameter.value != "1"){
                     throw InvalidPropertiesFormatException("Environment variable for parameter ${jsonParameter.symbol} has value ${envParameter.value} which does not conform with its datatype BOOL")
                 }
-                enviromentVars.add(EnvParameter(envParameter.symbol, envParameter.value, envParameter.type))
+                enviromentVars.add(EnvParameter(envParameter.symbol, envParameter.value, jsonParameter.datatype))
                 found = true
             }
         }
