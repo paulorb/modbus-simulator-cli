@@ -6,6 +6,8 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
     kotlin("jvm") version "1.8.20"
     application
+    jacoco
+    id ("org.sonarqube") version "3.5.0.2730"
 }
 
 group = "org.example"
@@ -53,6 +55,12 @@ tasks.test {
 
 kotlin {
     jvmToolchain(11)
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+    }
 }
 
 
