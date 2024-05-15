@@ -1,7 +1,3 @@
-<picture>
-  <img src="docs/media/plclogo.jpg" width="300">
-</picture>
-
 # Modbus Simulator CLI
 
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=paulorb_modbus-simulator-cli&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=paulorb_modbus-simulator-cli)
