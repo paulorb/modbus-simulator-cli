@@ -21,8 +21,12 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
                         val highWord = (intValue ushr 16) and 0xFFFF
                         holdingRegister[register.address.toInt()] =  lowWord.toShort()
                         holdingRegister[register.address.toInt() + 1] =  highWord.toShort()
+                    }else if(register.datatype == "UINT16"){
+                        holdingRegister[register.address.toInt()] =  register.value.toUShort().toShort()
                     }else
                         holdingRegister[register.address.toInt()] =  register.value.toShort()
+
+
                 }
                 AddressType.COIL -> coils[register.address.toInt()] = (register.value.toInt() == 1)
                 AddressType.DISCRETE_INPUT -> inputStatus[register.address.toInt()] =  (register.value.toInt() == 1)
