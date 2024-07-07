@@ -1,20 +1,36 @@
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import picocli.CommandLine
-import picocli.CommandLine.Command
-import picocli.CommandLine.Option
-import java.util.InvalidPropertiesFormatException
+import picocli.CommandLine.*
+import picocli.CommandLine.Model.CommandSpec
+import java.util.*
 import java.util.concurrent.Callable
 import kotlin.system.exitProcess
+
 
 data class EnvParameter(
     var symbol : String,
     var value: String,
     var type: String
 )
+
+
+
 @Command(name = "modbussimulatorcli", mixinStandardHelpOptions = true, version = ["CLI 0.0.99"],
-    description = ["Modbus TCP Simulator"])
+    description = ["Modbus TCP Simulator"], header = [
+"                     _ _                _____ _ _",
+"                    | | |              / ____| (_)",
+" _ __ ___   ___   __| | |__  _   _ ___| |    | |_",
+"| '_ ` _ \\ / _ \\ / _` | '_ \\| | | / __| |    | | |",
+"| | | | | | (_) | (_| | |_) | |_| \\__ \\ |____| | |",
+"|_| |_| |_|\\___/ \\__,_|_.__/ \\__,_|___/\\_____|_|_|",
+""
+]
+)
 class Checksum : Callable<Int> {
+
+    @Spec
+    var spec: CommandSpec? = null
 
     @Option(names = ["-f", "--file"], description = ["custom simulation configuration file (JSON)"])
     var file = ""
@@ -59,6 +75,9 @@ class Checksum : Callable<Int> {
         }
 
         environmentParameters = processEnvironmentParameters(parameters)
+        if(environmentParameters.isNotEmpty()){
+            println("environment parameters: ${environmentParameters.toString()}")
+        }
 
         //val fileContents = Files.readAllBytes(file.toPath())
         //val digest = MessageDigest.getInstance(port).digest(fileContents)
