@@ -6,6 +6,7 @@ import EnvironmentVariables
 import IfEqual
 import PlcMemory
 import Sub
+import org.slf4j.LoggerFactory
 import java.util.concurrent.CancellationException
 import toBooleanFromBinary
 
@@ -13,16 +14,19 @@ import toBooleanFromBinary
 class SubOperation(private val configuration: Configuration,private val memory: PlcMemory, environmentVariables: EnvironmentVariables
 ) : BaseOperation(environmentVariables, configuration) {
 
+    companion object {
+        val logger = LoggerFactory.getLogger("SubOperation")
+    }
     fun subOperation(element: Sub) {
-        println("Sub symbol ${element.symbol} value ${element.value}")
+        logger.debug("Sub symbol ${element.symbol} value ${element.value}")
         var value = processValue(element.value)
         var variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {
-            println("ERROR: Symbol ${element.symbol} not found during Set execution")
+            logger.error("Symbol ${element.symbol} not found during Set execution")
             throw CancellationException("Error - Sub")
         } else {
             if (variable.addressType == AddressType.COIL || variable.addressType == AddressType.DISCRETE_INPUT) {
-                println("ERROR: Symbol ${element.symbol} is of type COIL or DISCRETE_INPUT which is not support by Sub operation")
+                logger.error("Symbol ${element.symbol} is of type COIL or DISCRETE_INPUT which is not support by Sub operation")
                 throw CancellationException("Error - Sub")
             }
 
@@ -36,7 +40,7 @@ class SubOperation(private val configuration: Configuration,private val memory: 
                     if (variable.datatype == "FLOAT32") {
                         var currentValue = memory.readHoldingRegister(variable.address.toInt(), 2)
                         if (currentValue.isEmpty()) {
-                            println("ERROR: Add Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
+                            logger.error("Add Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
                             throw CancellationException("Error - Add")
                         }
                         val intValue = ((currentValue[1].toInt() shl 16) or (currentValue[0].toInt() and 0xFFFF))
@@ -47,7 +51,7 @@ class SubOperation(private val configuration: Configuration,private val memory: 
                     } else {
                         var currentValue = memory.readHoldingRegister(variable.address.toInt(), 1)
                         if (currentValue.isEmpty()) {
-                            println("ERROR: Add Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
+                            logger.error("Add Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
                             throw CancellationException("Error - Add")
                         }
                         var intValue = value.toInt()
