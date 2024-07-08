@@ -6,7 +6,8 @@ import picocli.CommandLine.Model.CommandSpec
 import java.util.*
 import java.util.concurrent.Callable
 import kotlin.system.exitProcess
-
+import org.apache.logging.log4j.core.config.Configurator
+import org.slf4j.LoggerFactory
 
 data class EnvParameter(
     var symbol : String,
@@ -50,6 +51,10 @@ class Checksum : Callable<Int> {
     private lateinit var modbusServer: ModbusServer
     private lateinit var environmentParameters: List<EnvParameter>
 
+    companion object {
+        val logger = LoggerFactory.getLogger("main")
+    }
+
     private fun processEnvironmentParameters(parameters: MutableList<String?>?): List<EnvParameter> {
         val envParameter = mutableListOf<EnvParameter>()
         parameters?.forEach { param ->
@@ -66,17 +71,18 @@ class Checksum : Callable<Int> {
     }
 
     override fun call(): Int {
+        Configurator.initialize(null, "log4j2.xml")
         val mainCoroutineScope = CoroutineScope(Dispatchers.Default)
         val configuration = ConfigurationParser()
 
         if(simulationRandomValues && file.isNotEmpty()){
-            println("-f and -sr cannot be mixed, one of the simulations must be chosen")
+            logger.error("-f and -sr cannot be mixed, one of the simulations must be chosen")
             return -1
         }
 
         environmentParameters = processEnvironmentParameters(parameters)
         if(environmentParameters.isNotEmpty()){
-            println("environment parameters: ${environmentParameters.toString()}")
+            logger.warn("environment parameters: ${environmentParameters.toString()}")
         }
 
         //val fileContents = Files.readAllBytes(file.toPath())
