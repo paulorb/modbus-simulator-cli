@@ -4,18 +4,20 @@ import AddressType
 import Configuration
 import PlcMemory
 import Random
+import org.slf4j.LoggerFactory
 import java.util.concurrent.CancellationException
 
 
 fun randomOperation(element: Random, configuration: Configuration, memory: PlcMemory){
-    println("Random symbol ${element.symbol} value min ${element.valueMin} value max ${element.valueMax}")
+    val logger = LoggerFactory.getLogger("randomOperation")
+    logger.debug("Random symbol ${element.symbol} value min ${element.valueMin} value max ${element.valueMax}")
     var variable = configuration.registers.getVarConfiguration(element.symbol)
     if (variable == null) {
-        println("ERROR: Symbol ${element.symbol} not found during Set execution")
+        logger.error("Symbol ${element.symbol} not found during Set execution")
         throw CancellationException("Error - Random")
     } else {
         if(variable.addressType == AddressType.COIL || variable.addressType == AddressType.DISCRETE_INPUT){
-            println("ERROR: Symbol ${element.symbol} is of type COIL or DISCRETE_INPUT which is not support by Random operation")
+            logger.error("Symbol ${element.symbol} is of type COIL or DISCRETE_INPUT which is not support by Random operation")
             throw CancellationException("Error - Random")
         }
 
