@@ -82,7 +82,7 @@ class Checksum : Callable<Int> {
 
         environmentParameters = processEnvironmentParameters(parameters)
         if(environmentParameters.isNotEmpty()){
-            logger.warn("environment parameters: ${environmentParameters.toString()}")
+            logger.info("environment parameters: ${environmentParameters.toString()}")
         }
 
         //val fileContents = Files.readAllBytes(file.toPath())

@@ -15,7 +15,7 @@ class SetOperation(private val configuration: Configuration,private val memory: 
         val logger = LoggerFactory.getLogger("SetOperation")
     }
     fun setOperation(element: Set) {
-        logger.debug("Set symbol ${element.symbol} value ${element.value}")
+        logger.info("Set symbol ${element.symbol} value ${element.value}")
         var value = processValue(element.value)
         var variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {

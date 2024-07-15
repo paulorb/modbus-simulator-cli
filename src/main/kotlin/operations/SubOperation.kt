@@ -18,7 +18,7 @@ class SubOperation(private val configuration: Configuration,private val memory: 
         val logger = LoggerFactory.getLogger("SubOperation")
     }
     fun subOperation(element: Sub) {
-        logger.debug("Sub symbol ${element.symbol} value ${element.value}")
+        logger.info("Sub symbol ${element.symbol} value ${element.value}")
         var value = processValue(element.value)
         var variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {

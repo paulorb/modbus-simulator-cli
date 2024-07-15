@@ -5,6 +5,7 @@ import Csv
 import PlcMemory
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
+import org.slf4j.LoggerFactory
 import java.io.FileReader
 import java.nio.file.Paths
 import java.util.concurrent.CancellationException
@@ -13,6 +14,9 @@ data class CsvOperationInfo(var position: Int, var csvColumn: List<String>)
 class CsvOperation {
     private var csvVariables: MutableMap<String, CsvOperationInfo> = mutableMapOf<String, CsvOperationInfo>()
 
+    companion object {
+        val logger = LoggerFactory.getLogger("CsvOperation")
+    }
     @Throws(InternalError::class)
     private  fun parseCsv(csvFileName: String, column: Int) : List<String> {
         val columnValues = mutableListOf<String>()
@@ -50,9 +54,10 @@ class CsvOperation {
     }
     fun process(element: Csv, configuration: Configuration, memory: PlcMemory) {
         var nextValue = getNextValue(element)
+        AddOperation.logger.info("Csv symbol ${element.symbol} value $nextValue")
         var variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {
-            println("ERROR: Symbol ${element.symbol} not found during CSV execution")
+            logger.error("Symbol ${element.symbol} not found during CSV execution")
             throw CancellationException("Error - CSV")
         } else {
             when (variable.addressType) {

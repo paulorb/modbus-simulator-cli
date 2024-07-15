@@ -10,7 +10,7 @@ import java.util.concurrent.CancellationException
 
 fun randomOperation(element: Random, configuration: Configuration, memory: PlcMemory){
     val logger = LoggerFactory.getLogger("randomOperation")
-    logger.debug("Random symbol ${element.symbol} value min ${element.valueMin} value max ${element.valueMax}")
+    logger.info("Random symbol ${element.symbol} value min ${element.valueMin} value max ${element.valueMax}")
     var variable = configuration.registers.getVarConfiguration(element.symbol)
     if (variable == null) {
         logger.error("Symbol ${element.symbol} not found during Set execution")

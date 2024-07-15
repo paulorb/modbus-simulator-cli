@@ -41,6 +41,7 @@ class LinearOperation {
 
     fun process(element: Linear, configuration: Configuration, memory: PlcMemory) {
         var nextValue = getNextValue(element)
+        logger.info("Linear symbol ${element.symbol} value $nextValue")
         var variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {
             logger.error("Symbol ${element.symbol} not found during Linear execution")
