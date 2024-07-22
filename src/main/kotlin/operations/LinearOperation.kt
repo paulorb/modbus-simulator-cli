@@ -3,10 +3,15 @@ package operations
 import Configuration
 import PlcMemory
 import Linear
+import org.slf4j.LoggerFactory
 import java.util.concurrent.CancellationException
 
 class LinearOperation {
     private var linearVariables: MutableMap<String, Double> = mutableMapOf<String, Double>()
+
+    companion object {
+        val logger = LoggerFactory.getLogger("LinearOperation")
+    }
 
     private fun getNextValue(linear: Linear): String {
         var x =0.0
@@ -36,13 +41,14 @@ class LinearOperation {
 
     fun process(element: Linear, configuration: Configuration, memory: PlcMemory) {
         var nextValue = getNextValue(element)
+        logger.info("Linear symbol ${element.symbol} value $nextValue")
         var variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {
-            println("ERROR: Symbol ${element.symbol} not found during Linear execution")
+            logger.error("Symbol ${element.symbol} not found during Linear execution")
             throw CancellationException("Error - Linear")
         } else {
             if (variable.addressType == AddressType.COIL || variable.addressType == AddressType.DISCRETE_INPUT) {
-                println("ERROR: Symbol ${element.symbol} is of type COIL or DISCRETE_INPUT which is not support by Linear operation")
+                logger.error("Symbol ${element.symbol} is of type COIL or DISCRETE_INPUT which is not support by Linear operation")
                 throw CancellationException("Error - Linear")
             }
 

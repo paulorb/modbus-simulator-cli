@@ -1,3 +1,4 @@
+import org.slf4j.LoggerFactory
 import java.util.InvalidPropertiesFormatException
 import java.util.concurrent.ConcurrentHashMap
 
@@ -9,6 +10,10 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
     private var inputRegister: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
     private var holdingRegister: ConcurrentHashMap<Int, Short> = ConcurrentHashMap()
     private var device =  configurationParser.getConfiguredDevice()
+
+    companion object {
+        val logger = LoggerFactory.getLogger("PlcMemory")
+    }
 
     init {
         device.configuration.registers.register.forEach { register ->
@@ -37,7 +42,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
     //0x
     override fun forceMultipleCoils(addressValueList: MutableList<Pair<Int, Boolean>>) {
-        println("(0x) forceMultipleCoils")
+        logger.debug("(0x) forceMultipleCoils")
         addressValueList.forEach { coil ->
             coils[coil.first] = coil.second
         }
@@ -45,7 +50,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
     //0x
     override fun forceSingleCoil(address: Int, value: Boolean) {
-        println("(0x) forceSingleCoil")
+        logger.debug("(0x) forceSingleCoil")
         coils[address] = value
     }
 
@@ -61,7 +66,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
     // 4x
     override fun presetMultipleRegisters(addressValueList: MutableList<Pair<Int, Short>>) {
-        println("(4x) presetMultipleRegisters")
+        logger.debug("(4x) presetMultipleRegisters")
         addressValueList.forEach { register ->
             holdingRegister[register.first] = register.second
         }
@@ -70,13 +75,13 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
 
     override fun presetSingleRegister(address: Int, value: Boolean) {
-        println("presetSingleRegister")
+        logger.debug("presetSingleRegister")
         TODO("Not yet implemented")
     }
 
     // 0x Registers
     override fun readCoilStatus(startAddress: Int, numberOfRegisters: Int): List<Boolean> {
-        println("(0x) readCoilStatus")
+        logger.debug("(0x) readCoilStatus")
         val listCoils = mutableListOf<Boolean>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(coils[i] != null){
@@ -90,14 +95,14 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
     // 4x
     override fun readHoldingRegister(startAddress: Int, numberOfRegisters: Int): List<Short> {
-        println("(4x) readHoldingRegister")
+        logger.debug("(4x) readHoldingRegister")
         val listHoldingRegisters = mutableListOf<Short>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(holdingRegister[i] != null){
-                println("readHoldingRegister address $i value=${holdingRegister[i]}")
+                logger.debug("readHoldingRegister address $i value=${holdingRegister[i]}")
                 listHoldingRegisters.add(holdingRegister[i]!!)
             }else{
-                println("readHoldingRegister address $i value=0")
+                logger.debug("readHoldingRegister address $i value=0")
                 listHoldingRegisters.add(0)
             }
         }
@@ -106,7 +111,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
     // 3x register
     override fun readInputRegister(startAddress: Int, numberOfRegisters: Int): List<Short> {
-        println("(3x) readInputRegister")
+        logger.debug("(3x) readInputRegister")
         val listInputRegisters = mutableListOf<Short>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(inputRegister[i] != null){
@@ -120,7 +125,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
 
     // 1x register
     override fun readInputStatus(startAddress: Int, numberOfRegisters: Int): List<Boolean> {
-        println("readInputStatus")
+        logger.debug("readInputStatus")
         val listCoils = mutableListOf<Boolean>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(inputStatus[i] != null){

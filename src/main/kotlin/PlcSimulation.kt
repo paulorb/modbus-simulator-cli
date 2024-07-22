@@ -1,5 +1,6 @@
 import kotlinx.coroutines.*
 import operations.*
+import org.slf4j.LoggerFactory
 import java.lang.Float
 import java.rmi.NotBoundException
 import java.util.*
@@ -16,6 +17,11 @@ class PlcSimulation(
     val addOperation = AddOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
     val setOperation = SetOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
     val subOperation = SubOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
+
+    companion object {
+        val logger = LoggerFactory.getLogger("PlcSimulation")
+    }
+
     init {
         var simulationConfiguration = configurationParser.getConfiguredDevice().simulation
         var configuration = configurationParser.getConfiguredDevice().configuration
@@ -34,9 +40,9 @@ class PlcSimulation(
                     }
                 }
             } catch (e: Exception) {
-                println("Exception - ${e.message}")
+                logger.error("Exception - ${e.message}")
              } finally {
-                 println("Job: Finally block, cleaning up resources")
+                logger.error("Job: Finally block, cleaning up resources")
             }
         }
 
@@ -53,7 +59,7 @@ class PlcSimulation(
             }
 
             is Delay -> {
-                println("Delay value ${element.value}")
+                logger.info("Delay value ${element.value}")
                 delay(element.value.toLong())
             }
 
@@ -85,7 +91,7 @@ class PlcSimulation(
 
 
     suspend fun ifEqual(element: IfEqual, configuration: Configuration, memory: PlcMemory) {
-        println("IfEqual symbol ${element.symbol} value ${element.value}")
+        logger.info("IfEqual symbol ${element.symbol} value ${element.value}")
         var value = processValue(element.value)
         var variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {
@@ -113,11 +119,11 @@ class PlcSimulation(
                             processOperationElement(subElement, configuration, memory)
                         }
                     }else {
-                        println("ERROR: Symbol ${element.symbol} has invalid datatype during IfEqual execution")
+                        logger.error("Symbol ${element.symbol} has invalid datatype during IfEqual execution")
                     }
 
             }else {
-                println("ERROR: Symbol ${element.symbol} not found during IfEqual execution")
+                logger.error("Symbol ${element.symbol} not found during IfEqual execution")
                 throw CancellationException("Error - IfEqual")
             }
         } else {
@@ -132,7 +138,7 @@ class PlcSimulation(
                     if (variable.datatype == "FLOAT32") {
                         var currentValue = memory.readHoldingRegister(variable.address.toInt(), 2)
                         if(currentValue.isEmpty()){
-                            println("ERROR: Add Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
+                            logger.error("Add Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
                             throw CancellationException("Error - Add")
                         }
                         val intValue = (( currentValue[1].toInt() shl 16) or (currentValue[0].toInt() and 0xFFFF))
@@ -153,7 +159,7 @@ class PlcSimulation(
                     } else {
                         var currentValue = memory.readHoldingRegister(variable.address.toInt(), 1)
                         if(currentValue.isEmpty()){
-                            println("ERROR: IfEqual Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
+                            logger.error("IfEqual Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
                             throw CancellationException("Error - IfEqual")
                         }
                         //compare
@@ -172,7 +178,7 @@ class PlcSimulation(
                 AddressType.INPUT_REGISTER -> {
                     val currentValue = memory.readInputRegister(variable.address.toInt(), 1)
                     if(currentValue.isEmpty()){
-                        println("ERROR: IfEqual Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
+                        logger.error("IfEqual Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
                         throw CancellationException("Error - IfEqual")
                     }
                     //compare
@@ -188,11 +194,11 @@ class PlcSimulation(
                 }
                 AddressType.COIL -> {
                     if ( (element.value != "0" && element.value != "1")) {
-                        println("ERROR: Invalid value format on IfEqual. Symbol ${element.symbol} is of BOOL type and supports only values 0 or 1 not ${element.value} for comparison")
+                        logger.error("Invalid value format on IfEqual. Symbol ${element.symbol} is of BOOL type and supports only values 0 or 1 not ${element.value} for comparison")
                     }
                     var currentValue = memory.readCoilStatus(variable.address.toInt(), 2)
                     if(currentValue.isEmpty()){
-                        println("ERROR: IfEqual Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
+                        logger.error("IfEqual Operation - Unable to get value of ${element.symbol} address ${variable.address} ")
                         throw CancellationException("Error - IfEqual")
                     }
                     //compare

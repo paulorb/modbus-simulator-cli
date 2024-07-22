@@ -20,6 +20,7 @@ repositories {
     }
 }
 
+val log4jVersion = "2.12.1"
 
 dependencies {
     kapt("info.picocli:picocli-codegen:4.6.1")
@@ -27,11 +28,15 @@ dependencies {
     implementation("javax.xml.bind:jaxb-api:2.3.1")
     implementation("com.sun.xml.bind:jaxb-core:2.3.0.1")
     implementation("com.sun.xml.bind:jaxb-impl:2.3.3")
-    implementation ("com.github.paulorb:modbus-kt:1.0.12")
+    implementation ("com.github.paulorb:modbus-kt:1.0.14")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("org.apache.commons:commons-csv:1.10.0")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
     testImplementation(kotlin("test"))
 }
+
 
 kapt {
     arguments {
