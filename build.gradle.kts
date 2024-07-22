@@ -37,9 +37,6 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
-configurations.all {
-    exclude(module = "sl")
-}
 
 kapt {
     arguments {
