@@ -32,10 +32,10 @@ jobs:
         ./gradlew test jacocoTestReport
 
     - name: Generate JaCoCo Badge
-        uses: cicirello/jacoco-badge-generator@v2
-        with:
-          generate-branches-badge: true
-          jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        generate-branches-badge: true
+        jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
