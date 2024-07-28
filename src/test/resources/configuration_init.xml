@@ -8,6 +8,7 @@
     <configuration initializeUndefinedRegisters="true" initialValue="0">
         <registers>
             <register addressType="HOLDING_REGISTER" address="14" symbol="RPM_MOTOR">500</register>
+            <register addressType="INPUT_REGISTER" address="5" symbol="HUMIDITY">30</register>
         </registers>
     </configuration>
     <simulation plcScanTime="1000">
