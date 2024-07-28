@@ -37,4 +37,15 @@ class PlcMemoryTest {
         assertEquals(1, values.size)
         assertEquals( values[0], true)
     }
+
+    @Test
+    fun `PlcMemory must be initialized with configured input status registers symbols`() {
+        val configuration = ConfigurationParser()
+        configuration.setReadFromResources(true)
+        configuration.setFileName("configuration_init.xml")
+        val plcMemory = PlcMemory(configuration)
+        val values = plcMemory.readInputStatus(5, 1)
+        assertEquals(1, values.size)
+        assertEquals( values[0], true)
+    }
 }

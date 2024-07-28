@@ -10,6 +10,7 @@
             <register addressType="HOLDING_REGISTER" address="14" symbol="RPM_MOTOR">500</register>
             <register addressType="INPUT_REGISTER" address="5" symbol="HUMIDITY">30</register>
             <register addressType="COIL" address="5" symbol="RELAYON">1</register>
+            <register addressType="DISCRETE_INPUT" address="5" symbol="RELAY_STATUS">1</register>
         </registers>
     </configuration>
     <simulation plcScanTime="1000">
