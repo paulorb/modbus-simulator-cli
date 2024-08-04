@@ -25,19 +25,19 @@ class ConfigurationParser {
         try {
             val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java, Parameters::class.java, Parameter::class.java)
             val unmarshaller = context.createUnmarshaller()
-            if(fileName.isEmpty() ) {
+            return if(fileName.isEmpty() ) {
                 val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
                 val device = unmarshaller.unmarshal(reader) as Device
-                return device
+                device
             }else {
                 if(readFromResources) {
                     val reader = StringReader(this::class.java.classLoader.getResource(fileName)!!.readText())
                     val device = unmarshaller.unmarshal(reader) as Device
-                    return device
+                    device
                 }else {
                     val bufferedReader: BufferedReader = File(fileName).bufferedReader()
                     val device = unmarshaller.unmarshal(bufferedReader) as Device
-                    return device
+                    device
                 }
             }
         } catch (e: JAXBException) {
