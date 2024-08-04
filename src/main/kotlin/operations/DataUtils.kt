@@ -3,7 +3,9 @@ package operations
 import PlcMemory
 import Register
 import java.lang.Float
-import toBooleanFromBinary
+import kotlin.Int
+import kotlin.Pair
+import kotlin.Short
 
 fun setHoldingRegisterFloat32(floatValue: kotlin.Float, memory: PlcMemory, variable: Register) {
     val intValue = Float.floatToIntBits(floatValue)

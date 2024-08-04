@@ -48,4 +48,7 @@ class PlcMemoryTest {
         assertEquals(1, values.size)
         assertEquals( values[0], true)
     }
+
+
+
 }

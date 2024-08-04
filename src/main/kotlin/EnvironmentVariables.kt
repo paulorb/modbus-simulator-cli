@@ -6,7 +6,7 @@ class EnvironmentVariables(
 {
 private var enviromentVars = mutableListOf<EnvParameter>()
 init {
-    var found = false
+    var found: Boolean
     configurationParser.getConfiguredDevice().parameters.parameters.forEach { jsonParameter ->
         found = false
         parameters.forEach { envParameter ->

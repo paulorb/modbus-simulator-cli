@@ -1,14 +1,13 @@
 package operations
 
 
+import AddressType
 import Configuration
 import EnvironmentVariables
-import IfEqual
 import PlcMemory
 import Sub
 import org.slf4j.LoggerFactory
 import java.util.concurrent.CancellationException
-import toBooleanFromBinary
 
 
 class SubOperation(private val configuration: Configuration,private val memory: PlcMemory, environmentVariables: EnvironmentVariables
