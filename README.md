@@ -4,6 +4,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=paulorb_modbus-simulator-cli&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=paulorb_modbus-simulator-cli)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=paulorb_modbus-simulator-cli&metric=bugs)](https://sonarcloud.io/summary/new_code?id=paulorb_modbus-simulator-cli)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=paulorb_modbus-simulator-cli&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=paulorb_modbus-simulator-cli)
+![Coverage](.github/badges/jacoco.svg)
 
 Modbus simulator CLI is a high-performance modbus TCP server with customizable simulation
 

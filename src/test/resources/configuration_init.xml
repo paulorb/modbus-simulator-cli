@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<device ip="0.0.0.0" port="502">
+    <parameters>
+        <parameter symbol="PARAM_INT16" datatype="INT16">15</parameter>
+        <parameter symbol="PARAM_FLOAT32" datatype="FLOAT32">5.45</parameter>
+        <parameter symbol="PARAM_BOOL" datatype="BOOL">1</parameter>
+    </parameters>
+    <configuration initializeUndefinedRegisters="true" initialValue="0">
+        <registers>
+            <register addressType="HOLDING_REGISTER" address="14" symbol="RPM_MOTOR">500</register>
+            <register addressType="INPUT_REGISTER" address="5" symbol="HUMIDITY">30</register>
+            <register addressType="COIL" address="5" symbol="RELAYON">1</register>
+            <register addressType="DISCRETE_INPUT" address="5" symbol="RELAY_STATUS">1</register>
+        </registers>
+    </configuration>
+    <simulation plcScanTime="1000">
+        <delay>500</delay>
+    </simulation>
+</device>

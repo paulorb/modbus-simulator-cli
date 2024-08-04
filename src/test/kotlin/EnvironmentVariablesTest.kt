@@ -5,6 +5,8 @@ internal class EnvironmentVariablesTest {
     @Test
     fun `Command line parameter must match with parameters definition`() {
         val configuration = ConfigurationParser()
+        configuration.setFileName("configuration.xml")
+        configuration.setReadFromResources(true)
         val listParameters = mutableListOf<EnvParameter>()
         listParameters.add(EnvParameter(
             "PARAM_INT16",

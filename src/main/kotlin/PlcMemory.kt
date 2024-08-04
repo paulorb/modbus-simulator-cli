@@ -85,7 +85,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         val listCoils = mutableListOf<Boolean>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(coils[i] != null){
-                listCoils.add(coils[i]!!)
+                listCoils.add(coils.getValue(i))
             }else{
                 listCoils.add(false)
             }
@@ -100,7 +100,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(holdingRegister[i] != null){
                 logger.debug("readHoldingRegister address $i value=${holdingRegister[i]}")
-                listHoldingRegisters.add(holdingRegister[i]!!)
+                listHoldingRegisters.add(holdingRegister.getValue(i))
             }else{
                 logger.debug("readHoldingRegister address $i value=0")
                 listHoldingRegisters.add(0)
@@ -115,7 +115,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         val listInputRegisters = mutableListOf<Short>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(inputRegister[i] != null){
-                listInputRegisters.add(inputRegister[i]!!)
+                listInputRegisters.add(inputRegister.getValue(i))
             }else{
                 listInputRegisters.add(0)
             }
@@ -129,7 +129,7 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         val listCoils = mutableListOf<Boolean>()
         for(i in startAddress until startAddress + numberOfRegisters) {
             if(inputStatus[i] != null){
-                listCoils.add(inputStatus[i]!!)
+                listCoils.add(inputStatus.getValue(i))
             }else{
                 listCoils.add(false)
             }
