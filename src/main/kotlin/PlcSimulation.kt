@@ -1,9 +1,9 @@
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import operations.*
 import org.slf4j.LoggerFactory
-import java.lang.Float
-import java.rmi.NotBoundException
-import java.util.*
 import java.util.concurrent.CancellationException
 
 class PlcSimulation(

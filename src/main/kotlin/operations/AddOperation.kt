@@ -1,12 +1,12 @@
 package operations
 
-import Configuration
-import PlcMemory
 import Add
+import AddressType
+import Configuration
 import EnvironmentVariables
+import PlcMemory
 import org.slf4j.LoggerFactory
 import java.util.concurrent.CancellationException
-import toBooleanFromBinary
 
 class AddOperation(private val configuration: Configuration,private val memory: PlcMemory, environmentVariables: EnvironmentVariables
 ) : BaseOperation(environmentVariables, configuration) {

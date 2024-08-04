@@ -85,9 +85,6 @@ class Checksum : Callable<Int> {
             logger.info("environment parameters: ${environmentParameters.toString()}")
         }
 
-        //val fileContents = Files.readAllBytes(file.toPath())
-        //val digest = MessageDigest.getInstance(port).digest(fileContents)
-        //println(("%0" + digest.size * 2 + "x").format(BigInteger(1, digest)))
         if(simulationRandomValues) {
             modbusServer = ModbusServer(ModbusServerEventListenerReplyRandomNumbers())
         }else {
