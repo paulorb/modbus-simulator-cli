@@ -23,7 +23,7 @@ class ConfigurationParser {
     }
     private fun load(): Device? {
         try {
-            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java, Parameters::class.java, Parameter::class.java)
+            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java, Parameters::class.java, Parameter::class.java, Trace::class.java)
             val unmarshaller = context.createUnmarshaller()
             return if(fileName.isEmpty() ) {
                 val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
@@ -149,6 +149,17 @@ data class Sub(
 ){
     constructor(): this("", "")
 }
+
+
+//<trace symbol="MOTOR_SPEED1"></trace>
+@XmlRootElement(name="trace")
+data class Trace(
+    @field:XmlAttribute(required = true)
+    val symbol: String,
+){
+    constructor(): this("")
+}
+
 
 
 //<add symbol="MOTOR_SPEED1">RPM_MOTOR1</add>
