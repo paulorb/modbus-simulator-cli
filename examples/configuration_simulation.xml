@@ -78,7 +78,9 @@
         <csv symbol="TEMPERATURE_MOTOR4" file="test_data.csv" column="2" step="2" startRow="2" endRow="5" replay="true"/>
         <set symbol="RELAYON">1</set>
         <set symbol="RELAY_STATUS">1</set>
+        <trace symbol="RPM_MOTOR" />
         <set symbol="RPM_MOTOR">400</set>
+        <trace symbol="RPM_MOTOR" />
         <delay>1000</delay>
         <add symbol="MOTOR_SPEED1">15</add>
         <add symbol="RPM7">1</add>

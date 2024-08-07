@@ -124,3 +124,15 @@ Example using a parameter as a value
 ```
 
 Please note the **symbol** and **value** datatype needs to match.
+
+
+## Trace
+
+Trace operation provides a tool for debugging, by printing (tracing) the current
+value of symbols
+
+Supported registers: **HOLDING_REGISTER**, **COIL**, **DISCRETE_INPUT**, **INPUT_REGISTER**
+
+```
+    <trace symbol="RPM_MOTOR" />
+```

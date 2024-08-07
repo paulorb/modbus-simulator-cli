@@ -14,6 +14,7 @@ class PlcSimulation(
 ): BaseOperation(parameters,configurationParser.getConfiguredDevice().configuration ) {
     val linearOperations = LinearOperation()
     val csvOperations = CsvOperation()
+    var traceOperation = TraceOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
     val addOperation = AddOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
     val setOperation = SetOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
     val subOperation = SubOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
@@ -81,6 +82,10 @@ class PlcSimulation(
 
             is IfEqual -> {
                 ifEqual(element, configuration, memory)
+            }
+
+            is Trace -> {
+                traceOperation.traceOperation(element)
             }
 
             else -> throw UnsupportedOperationException("Unknown simulation step type")
