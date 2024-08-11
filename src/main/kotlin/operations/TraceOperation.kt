@@ -35,7 +35,7 @@ class TraceOperation(
                         }
                         val intValue = ((currentValue[1].toInt() shl 16) or (currentValue[0].toInt() and 0xFFFF))
                         val currentFloatValue = java.lang.Float.intBitsToFloat(intValue)
-                        valueToTrace = currentValue.toString()
+                        valueToTrace = currentFloatValue.toString()
                     } else {
                         var currentValue = memory.readHoldingRegister(variable.address.toInt(), 1)
                         if (currentValue.isEmpty()) {
