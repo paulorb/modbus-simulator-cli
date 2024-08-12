@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<device ip="0.0.0.0" port="502">
+    <features>
+        <disable addressType="COIL" error="ILLEGAL_FUNCTION"/>
+    </features>
+    <parameters>
+        <parameter symbol="PARAM_CURRENT_SELECTION" datatype="INT16">15</parameter>
+        <parameter symbol="PARAM_SET_TEMPERATURE" datatype="FLOAT32">5.45</parameter>
+        <parameter symbol="PARAM_ENABLE_FAST_MODE" datatype="BOOL">1</parameter>
+    </parameters>
+    <configuration initializeUndefinedRegisters="true" initialValue="0">
+        <registers>
+            <register addressType="HOLDING_REGISTER" address="1" datatype="INT16" symbol="RPM_MOTOR1">1</register>
+            <!--
+             disabled registers are allowed, it can be part of the configured registers and its operations,
+             but any attempt read/write to them from modbus will trigger an error code (or not response) depending on
+             the features section configuration
+             -->
+            <register addressType="COIL" address="1" symbol="RELAYON">1</register>
+        </registers>
+    </configuration>
+    <simulation plcScanTime="1000">
+        <delay>500</delay>
+        <set symbol="RELAYON">0</set>
+        <ifEqual symbol="RPM_MOTOR1" value="1">
+            <set symbol="RPM_MOTOR1">777</set>
+            <ifEqual symbol="RPM_MOTOR1" value="777">
+                <set symbol="RPM_MOTOR1">888</set>
+                <ifEqual symbol="RPM_MOTOR1" value="888">
+                    <set symbol="RPM_MOTOR1">999</set>
+                </ifEqual>
+            </ifEqual>
+        </ifEqual>
+        <sub symbol="RPM_MOTOR1">12</sub>
+    </simulation>
+</device>
