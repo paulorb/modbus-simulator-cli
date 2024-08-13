@@ -23,7 +23,7 @@ class ConfigurationParser {
     }
     private fun load(): Device? {
         try {
-            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java, Parameters::class.java, Parameter::class.java, Trace::class.java)
+            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java, Parameters::class.java, Parameter::class.java, Trace::class.java, Features::class.java, Disable::class.java)
             val unmarshaller = context.createUnmarshaller()
             return if(fileName.isEmpty() ) {
                 val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
@@ -79,6 +79,31 @@ class Simulation(
 ){
     constructor() : this(1000,mutableListOf())
 
+}
+
+//   <features>
+//        <disable addressType="COIL" error="ILLEGAL_FUNCTION"/>
+//    </features>
+@XmlAccessorType(XmlAccessType.NONE)
+data class Features(
+    @field:XmlElement(name = "features")
+    val features: MutableList<Disable>
+) {
+    constructor(): this(mutableListOf())
+    fun getFeatures(symbolName: String) : MutableList<Disable> {
+        return features
+    }
+}
+
+//        <disable addressType="COIL" error="ILLEGAL_FUNCTION"/>
+@XmlRootElement(name="disable")
+data class Disable(
+    @field:XmlAttribute(required = true)
+    val addressType: AddressType,
+    @field:XmlAttribute(required = true)
+    val error: ErrorCodes
+) {
+    constructor() : this(AddressType.COIL, ErrorCodes.ILLEGAL_FUNCTION)
 }
 
 //<ifEqual symbol="TEMP" value="12.4">
@@ -257,6 +282,20 @@ class Registers(
         }
         return null
     }
+}
+
+enum class ErrorCodes(val desc: String) {
+    ILLEGAL_FUNCTION("ILLEGAL_FUNCTION"),
+    ILLEGAL_DATA_ADDRESS("ILLEGAL_DATA_ADDRESS"),
+    ILLEGAL_DATA_VALUE("ILLEGAL_DATA_VALUE"),
+    SLAVE_DEVICE_FAILURE("SLAVE_DEVICE_FAILURE"),
+    ACKNOWLEDGE("ACKNOWLEDGE"),
+    SLAVE_DEVICE_BUSY("SLAVE_DEVICE_BUSY"),
+    NEGATIVE_ACKNOWLEDGE("NEGATIVE_ACKNOWLEDGE"),
+    MEMORY_PARITY_ERROR("MEMORY_PARITY_ERROR"),
+    GATEWAY_PATH_UNAVAILABLE("GATEWAY_PATH_UNAVAILABLE"),
+    GATEWAY_TARGET_DEVIDE_FAILED_TO_RESPOND("GATEWAY_TARGET_DEVIDE_FAILED_TO_RESPOND"),
+    NO_RESPONSE("NO_RESPONSE")
 }
 
 enum class AddressType(val desc: String) {
