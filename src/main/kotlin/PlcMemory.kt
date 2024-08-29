@@ -71,11 +71,9 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
         }
     }
 
-
-
-    override fun presetSingleRegister(address: Int, value: Boolean) {
-        logger.debug("presetSingleRegister")
-        TODO("Not yet implemented")
+    // 4x register
+    override fun presetSingleRegister(address: Int, value: Short) {
+        holdingRegister[address] = value
     }
 
     // 0x Registers
