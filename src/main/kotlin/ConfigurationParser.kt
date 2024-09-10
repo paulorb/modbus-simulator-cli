@@ -23,7 +23,7 @@ class ConfigurationParser {
     }
     private fun load(): Device? {
         try {
-            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java, Parameters::class.java, Parameter::class.java, Trace::class.java)
+            val context = JAXBContext.newInstance(Device::class.java, Set::class.java, Random::class.java, Delay::class.java, Linear::class.java, Add::class.java, Sub::class.java, Csv::class.java, IfEqual::class.java, Parameters::class.java, Parameter::class.java, Trace::class.java, Mult::class.java, Div::class.java, IfGreater::class.java, IfLess::class.java)
             val unmarshaller = context.createUnmarshaller()
             return if(fileName.isEmpty() ) {
                 val reader = StringReader(this::class.java.classLoader.getResource("configuration.xml")!!.readText())
@@ -96,6 +96,40 @@ data class IfEqual(
 ){
     constructor() : this("","",mutableListOf())
 }
+
+//<ifGreater symbol="TEMP" value="12.4">
+//   <sub symbol="MOTOR_SPEED1">12</sub>
+//   any other operation ...
+//</ifGreater>
+@XmlRootElement(name="ifGreater")
+data class IfGreater(
+    @field:XmlAttribute(required = true)
+    val symbol: String,
+    @field:XmlAttribute(required = true)
+    val value: String,
+    @XmlAnyElement(lax = true)
+    var randomElements: List<Any>
+){
+    constructor() : this("","",mutableListOf())
+}
+
+//<ifLess symbol="TEMP" value="12.4">
+//   <sub symbol="MOTOR_SPEED1">12</sub>
+//   any other operation ...
+//</ifLess>
+@XmlRootElement(name="ifLess")
+data class IfLess(
+    @field:XmlAttribute(required = true)
+    val symbol: String,
+    @field:XmlAttribute(required = true)
+    val value: String,
+    @XmlAnyElement(lax = true)
+    var randomElements: List<Any>
+){
+    constructor() : this("","",mutableListOf())
+}
+
+
 
 //<csv symbol="TEMPERATURE_MOTOR4" file="test.csv" column="0" step="2" startRow="2" endRow="100" replay="true"/>
 @XmlRootElement(name="csv")
@@ -172,6 +206,29 @@ data class Add(
 ){
     constructor(): this("", "0")
 }
+
+//<mult symbol="MOTOR_SPEED1">RPM_MOTOR1</mult>
+@XmlRootElement(name="mult")
+data class Mult(
+    @field:XmlAttribute(required = true)
+    val symbol: String,
+    @field:XmlValue
+    val value: String,
+){
+    constructor(): this("", "0")
+}
+
+//<div symbol="MOTOR_SPEED1">RPM_MOTOR1</div>
+@XmlRootElement(name="div")
+data class Div(
+    @field:XmlAttribute(required = true)
+    val symbol: String,
+    @field:XmlValue
+    val value: String,
+){
+    constructor(): this("", "0")
+}
+
 
 //<delay>100</delay>
 @XmlRootElement(name="delay")
