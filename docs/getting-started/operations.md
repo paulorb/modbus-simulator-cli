@@ -45,6 +45,36 @@ Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
 *For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
 
 
+## Mult
+Mult (as the name implies) multiplies a certain value of a variable, like the example below:
+
+```xml
+ <mult symbol="MOTOR_SPEED1">1.12</mult>
+```
+
+Both **symbol** and **value** are mandatory fields. **value** can be of type *FLOAT32* , *INT16*  which must
+follow the same type of the specified **symbol** definition.
+
+Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
+
+*For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
+
+
+## Div
+Div (as the name implies) divides a certain value of a variable, like the example below:
+
+```xml
+ <div symbol="MOTOR_SPEED1">1.12</div>
+```
+
+Both **symbol** and **value** are mandatory fields. **value** can be of type *FLOAT32* , *INT16*  which must
+follow the same type of the specified **symbol** definition.
+
+Supported registers: **HOLDING_REGISTER**, **INPUT_REGISTER**
+
+*For **INPUT_REGISTER**  type *FLOAT32* is not supported!*
+
+
 ## Random
 Random generates new random values each time it executes
 
