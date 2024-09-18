@@ -156,6 +156,54 @@ Example using a parameter as a value
 Please note the **symbol** and **value** datatype needs to match.
 
 
+
+## If greater
+Used for comparison, every operation inside the ifGreater body will be executed
+
+```
+  <ifGreater symbol="TEMPERATURE_MOTOR5" value="-12.5">
+            <set symbol="MOTOR5_RPM">0</set>        
+  </ifGreater>
+```
+
+Both **symbol** and **value** are mandatory fields. Both can have an atomic value or a reference to a symbol (which can refer to a register or a parameter)
+
+Supported registers: HOLDING_REGISTER, INPUT_REGISTER, COIL and PARAMETER
+
+Example using a parameter as a value
+```
+  <ifGreater symbol="TEMPERATURE_MOTOR5" value="PARAM_DEFINED_TEMPERATURE">
+            <set symbol="MOTOR5_RPM">0</set>        
+  </ifGreater>
+```
+
+Please note the **symbol** and **value** datatype needs to match.
+
+
+
+## If less
+Used for comparison, every operation inside the ifLess body will be executed
+
+```
+  <ifLess symbol="TEMPERATURE_MOTOR5" value="-12.5">
+            <set symbol="MOTOR5_RPM">0</set>        
+  </ifLess>
+```
+
+Both **symbol** and **value** are mandatory fields. Both can have an atomic value or a reference to a symbol (which can refer to a register or a parameter)
+
+Supported registers: HOLDING_REGISTER, INPUT_REGISTER, COIL and PARAMETER
+
+Example using a parameter as a value
+```
+  <ifLess symbol="TEMPERATURE_MOTOR5" value="PARAM_DEFINED_TEMPERATURE">
+            <set symbol="MOTOR5_RPM">0</set>        
+  </ifLess>
+```
+
+Please note the **symbol** and **value** datatype needs to match.
+
+
 ## Trace
 
 Trace operation provides a tool for debugging, by printing (tracing) the current
