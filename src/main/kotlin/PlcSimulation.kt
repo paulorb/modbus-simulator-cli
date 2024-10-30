@@ -11,7 +11,7 @@ class PlcSimulation(
     memory: PlcMemory,
     private val parameters: EnvironmentVariables,
     coroutineScope: CoroutineScope
-): BaseOperation(parameters,configurationParser.getConfiguredDevice().configuration ) {
+): BaseOperation(parameters,configurationParser.getConfiguredDevice().configuration, memory ) {
     val linearOperations = LinearOperation()
     val csvOperations = CsvOperation()
     var traceOperation = TraceOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)

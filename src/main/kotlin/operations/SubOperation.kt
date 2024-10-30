@@ -11,7 +11,7 @@ import java.util.concurrent.CancellationException
 
 
 class SubOperation(private val configuration: Configuration,private val memory: PlcMemory, environmentVariables: EnvironmentVariables
-) : BaseOperation(environmentVariables, configuration) {
+) : BaseOperation(environmentVariables, configuration, memory) {
 
     companion object {
         val logger = LoggerFactory.getLogger("SubOperation")
