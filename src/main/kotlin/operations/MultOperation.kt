@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 import java.util.concurrent.CancellationException
 
 class MultOperation(private val configuration: Configuration,private val memory: PlcMemory, environmentVariables: EnvironmentVariables
-) : BaseOperation(environmentVariables, configuration) {
+) : BaseOperation(environmentVariables, configuration, memory) {
 
     companion object {
         val logger = LoggerFactory.getLogger("MultOperation")
