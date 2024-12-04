@@ -20,7 +20,7 @@ class PlcSimulation(
     val subOperation = SubOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
     val multOperation = MultOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
     val divOperation = DivOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
-
+    val toggleOperation = ToggleOperation(configurationParser.getConfiguredDevice().configuration, memory, parameters)
     companion object {
         val logger = LoggerFactory.getLogger("PlcSimulation")
     }
@@ -59,6 +59,10 @@ class PlcSimulation(
 
             is Random -> {
                 randomOperation(element, configuration, memory)
+            }
+
+            is Toggle -> {
+                toggleOperation.toggleOperation(element)
             }
 
             is Delay -> {
