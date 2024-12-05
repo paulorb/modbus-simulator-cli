@@ -15,9 +15,8 @@ class ToggleOperation(private val configuration: Configuration,private val memor
     }
 
     fun toggleOperation(element: Toggle) {
-        SubOperation.logger.info("Toggle symbol ${element.symbol}")
-        var value = processValue(element.symbol)
-        var variable = configuration.registers.getVarConfiguration(element.symbol)
+        logger.info("Toggle symbol ${element.symbol}")
+        val variable = configuration.registers.getVarConfiguration(element.symbol)
         if (variable == null) {
             SubOperation.logger.error("Symbol ${element.symbol} not found during Set execution")
             throw CancellationException("Error - Sub")
