@@ -9,7 +9,7 @@
         <registers>
             <register addressType="HOLDING_REGISTER" address="14" symbol="RPM_MOTOR">500</register>
             <register addressType="HOLDING_REGISTER" address="8" datatype="FLOAT32" symbol="MOTOR_SPEED1">123.7</register>
-            <register addressType="HOLDING_REGISTER" address="10" datatype="FLOAT32" symbol="TEMPERATURE1">-12.5</register>
+            <register addressType="HOLDING_REGISTER" address="10" datatype="FLOAT32" symbol="TEMPERATURE1">100.0</register>
             <register addressType="HOLDING_REGISTER" address="12" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR1">-12.5</register>
             <register addressType="HOLDING_REGISTER" address="14" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR2">-12.5</register>
             <register addressType="HOLDING_REGISTER" address="16" datatype="FLOAT32" symbol="TEMPERATURE_MOTOR3">-12.5</register>
@@ -39,81 +39,21 @@
             <register addressType="INPUT_REGISTER" address="8" symbol="RPM5">5</register>
             <register addressType="INPUT_REGISTER" address="10" symbol="RPM6">6</register>
             <register addressType="INPUT_REGISTER" address="12" symbol="RPM7">7</register>
+            <register addressType="HOLDING_REGISTER" address="200" datatype="FLOAT32" symbol="VAR_TEMP">123.7</register>
+            <register addressType="COIL" address="0" symbol="TEST">0</register>
         </registers>
     </configuration>
     <simulation plcScanTime="1000">
-        <delay>500</delay>
-        <set symbol="RELAYON">0</set>
-        <set symbol="RELAY_STATUS">0</set>
-        <set symbol="RPM_MOTOR">100</set>
-        <set symbol="MOTOR_SPEED1">100.5</set>
-        <random symbol="TEMPERATURE1" valueMin="-50.0" valueMax="10.0"/>
-        <trace symbol="TEMPERATURE1" />
-        <delay>500</delay>
-        <set symbol="RPM">60</set>
-        <set symbol="MOTOR_SPEED1">190.5</set>
-        <mult symbol="MOTOR_SPEED1">2.5</mult>
-        <trace symbol="MOTOR_SPEED1" />
-        <ifGreater symbol="MOTOR_SPEED1" value="470.0">
-            <trace symbol="MOTOR_SPEED1" />
-        </ifGreater>
-        <div symbol="MOTOR_SPEED1">3.5</div>
-        <ifLess symbol="MOTOR_SPEED1" value="470.0">
-            <trace symbol="MOTOR_SPEED1" />
-        </ifLess>
-        <trace symbol="MOTOR_SPEED1" />
-        <ifEqual symbol="RPM_MOTOR1" value="1">
-            <set symbol="RPM_MOTOR1">777</set>
-            <ifEqual symbol="RPM_MOTOR1" value="777">
-                <set symbol="RPM_MOTOR1">888</set>
-                <ifEqual symbol="RPM_MOTOR1" value="888">
-                    <set symbol="RPM_MOTOR1">999</set>
-                </ifEqual>
+        <add symbol="RPM_MOTOR1">1</add>
+        <ifEqual symbol="RPM_MOTOR1" value="10">
+            <ifEqual symbol="TEST" value="1">
+                <set symbol="TEST">0</set>
             </ifEqual>
-        </ifEqual>
-        <ifEqual symbol="TEMPERATURE_MOTOR5" value="-12.5">
-            <set symbol="TEMPERATURE_MOTOR5">777</set>
-            <ifEqual symbol="TEMPERATURE_MOTOR5" value="777">
-                <set symbol="TEMPERATURE_MOTOR5">888</set>
-                <ifEqual symbol="TEMPERATURE_MOTOR5" value="888">
-                    <set symbol="TEMPERATURE_MOTOR5">999</set>
-                </ifEqual>
+            <ifEqual symbol="TEST" value="0">
+                <set symbol="TEST">1</set>
             </ifEqual>
+            <set symbol="RPM_MOTOR1">0</set>
+            <toggle symbol="RELAYON" />
         </ifEqual>
-        <ifEqual symbol="PARAM_CURRENT_SELECTION" value="15">
-            <set symbol="RPM_MOTOR9">15</set>
-        </ifEqual>
-        <linear symbol="TEMPERATURE_MOTOR1" a="3" b="2" startX="0" endX="12" replay="true" step="1.5"/>
-        <linear symbol="TEMPERATURE_MOTOR2" a="3" b="2" startX="12" endX="0" replay="true" step="1.5"/>
-        <trace symbol="TEMPERATURE_MOTOR2" />
-        <csv symbol="TEMPERATURE_MOTOR3" file="test_data.csv" column="1" replay="true"/>
-        <csv symbol="TEMPERATURE_MOTOR4" file="test_data.csv" column="2" step="2" startRow="2" endRow="5" replay="true"/>
-        <set symbol="RELAYON">1</set>
-        <trace symbol="RELAYON" />
-        <set symbol="RELAY_STATUS">1</set>
-        <trace symbol="RPM_MOTOR" />
-        <set symbol="RPM_MOTOR">400</set>
-        <trace symbol="RPM_MOTOR" />
-        <delay>1000</delay>
-        <add symbol="MOTOR_SPEED1">15</add>
-        <add symbol="RPM7">1</add>
-        <delay>1000</delay>
-        <add symbol="MOTOR_SPEED1">15</add>
-        <add symbol="RPM7">1</add>
-        <delay>1000</delay>
-        <add symbol="MOTOR_SPEED1">15</add>
-        <add symbol="RPM7">1</add>
-        <delay>1000</delay>
-        <add symbol="MOTOR_SPEED1">15</add>
-        <add symbol="RPM7">1</add>
-        <delay>1000</delay>
-        <add symbol="MOTOR_SPEED1">15</add>
-        <add symbol="RPM7">1</add>
-        <delay>1000</delay>
-        <add symbol="MOTOR_SPEED1">15</add>
-        <add symbol="RPM7">1</add>
-        <delay>1000</delay>
-        <add symbol="RPM_MOTOR4">12</add>
-        <sub symbol="RPM_MOTOR1">12</sub>
     </simulation>
 </device>

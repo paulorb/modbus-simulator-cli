@@ -15,6 +15,16 @@ follow the same type of the specified **symbol** definition. In case the variabl
 
 Supported registers: **HOLDING_REGISTER**, **COIL**, **DISCRETE_INPUT**, **INPUT_REGISTER**
 
+## Toggle
+Toggle acts as a NOT inverting the logic of the COIL
+
+```xml
+ <toggle symbol="COIL_REGISTER" />
+```
+
+Supported registers: **COIL**
+
+
 ## Add
 Add (as the name implies) add a certain value to a variable, like the example below:
 

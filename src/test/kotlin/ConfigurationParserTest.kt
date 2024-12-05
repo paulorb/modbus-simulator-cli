@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import kotlin.test.assertTrue
 
 class ConfigurationParserTest {
 
@@ -11,5 +12,13 @@ class ConfigurationParserTest {
         configuration.setReadFromResources(true)
         configuration.setFileName("invalid_missing_device.xml")
         assertThrows<NullPointerException> { configuration.getConfiguredDevice() }
+    }
+
+    @Test
+    fun `Parse must be able to parse toggle operations`() {
+        val configuration = ConfigurationParser()
+        configuration.setReadFromResources(true)
+        configuration.setFileName("toggle_operation.xml")
+        assertTrue(configuration.getConfiguredDevice().simulation.randomElements[0] is Toggle)
     }
 }
