@@ -25,7 +25,7 @@ and simulation operation can be performed for each register.
 
 | Register               | Datatype               | Operations                                                     |
 |------------------------|------------------------|----------------------------------------------------------------|
-| Coils (0x)             | BOOL                   | Set, IfEqual, IfGreater, IfLess                                |
+| Coils (0x)             | BOOL                   | Set, IfEqual, IfGreater, IfLess, Toggle                        |
 | Input register (1x)    | BOOL                   | Set, IfEqual, IfGreater, IfLess                                |
 | Discrete Input (3x)    | INT16                  | Set, Add, Sub, Random, Linear, Csv, IfEqual, IfGreater, IfLess |
 | Holding Registers (4x) | INT16, UINT16, FLOAT32 | Set, Add, Sub, Random, Linear, Csv, IfEqual, IfGreater, IfLess |
