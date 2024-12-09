@@ -3,9 +3,11 @@
     <configuration initializeUndefinedRegisters="true" initialValue="0">
         <registers>
             <register addressType="COIL" address="0" symbol="RELAYON">0</register>
+            <register addressType="HOLDING_REGISTER" address="14" symbol="RPM_MOTOR">500</register>
         </registers>
     </configuration>
     <simulation plcScanTime="1000">
         <set symbol="RELAYON">1</set>
+        <set symbol="RPM_MOTOR">600</set>
     </simulation>
 </device>
