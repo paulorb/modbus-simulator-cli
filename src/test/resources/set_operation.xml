@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<device ip="0.0.0.0" port="502">
+    <configuration initializeUndefinedRegisters="true" initialValue="0">
+        <registers>
+            <register addressType="COIL" address="0" symbol="RELAYON">0</register>
+        </registers>
+    </configuration>
+    <simulation plcScanTime="1000">
+        <set symbol="RELAYON">1</set>
+    </simulation>
+</device>
