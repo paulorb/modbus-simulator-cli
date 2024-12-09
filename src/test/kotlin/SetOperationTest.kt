@@ -30,4 +30,26 @@ class SetOperationTest {
         assertEquals(plcMemory.readHoldingRegister(configuration.getConfiguredDevice().configuration.registers.register[1].address.toInt(), 1).first(), 600)
     }
 
+    @Test
+    fun `Set must set a FLOAT32 value to a holding register variable`() {
+        val configuration = ConfigurationParser()
+        configuration.setReadFromResources(true)
+        configuration.setFileName("set_operation.xml")
+        val plcMemory = PlcMemory(configuration)
+        val setOperation = SetOperation(configuration.getConfiguredDevice().configuration, plcMemory, EnvironmentVariables(listOf<EnvParameter>(),ConfigurationParser() ))
+        assertTrue(configuration.getConfiguredDevice().simulation.randomElements[2] is Set)
+        var value1 = plcMemory.readHoldingRegister(configuration.getConfiguredDevice().configuration.registers.register[2].address.toInt(), 2).first()
+        var value2 = plcMemory.readHoldingRegister(configuration.getConfiguredDevice().configuration.registers.register[2].address.toInt(), 2)[1]
+        var intValue = (( value2.toInt() shl 16) or (value1.toInt() and 0xFFFF))
+        var currentFloatValue = java.lang.Float.intBitsToFloat(intValue)
+        assertEquals(currentFloatValue, 500.0.toFloat())
+        setOperation.setOperation(configuration.getConfiguredDevice().simulation.randomElements[2] as Set)
+        value1 = plcMemory.readHoldingRegister(configuration.getConfiguredDevice().configuration.registers.register[2].address.toInt(), 2).first()
+        value2 = plcMemory.readHoldingRegister(configuration.getConfiguredDevice().configuration.registers.register[2].address.toInt(), 2)[1]
+        intValue = (( value2.toInt() shl 16) or (value1.toInt() and 0xFFFF))
+        currentFloatValue = java.lang.Float.intBitsToFloat(intValue)
+        assertEquals(currentFloatValue, 600.0.toFloat())
+    }
+
+
 }
