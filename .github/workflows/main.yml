@@ -17,6 +17,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Print event context
+      run: |
+          echo "Event action: ${GITHUB_EVENT_ACTION}"
+          echo "Event ref type: ${GITHUB_EVENT_REF_TYPE}"
+          echo "Event branch: ${GITHUB_EVENT_BRANCH}"
     - name: Checkout Repository
       uses: actions/checkout@v2
 
