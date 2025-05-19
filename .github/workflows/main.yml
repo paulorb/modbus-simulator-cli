@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - multiarch
   pull_request:
     branches:
       - master
