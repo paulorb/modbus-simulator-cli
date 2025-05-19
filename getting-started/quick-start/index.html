@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Paulo Balbino" /><link rel="canonical" href="https://wp-net.github.io/ModbusSimulatorCLI/getting-started/quick-start/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Quick start - Modbus Simulator CLI</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Quick start";
+        var mkdocs_page_input_path = "getting-started/quick-start.md";
+        var mkdocs_page_url = "/ModbusSimulatorCLI/getting-started/quick-start/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Modbus Simulator CLI
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Quick start</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#predefined-simulations">Predefined Simulations</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#random-values">Random values</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#custom-simulation">Custom Simulation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#custom-simulation-with-docker">Custom simulation with docker</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#device-section">Device section</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../operations/">Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../input-parameters/">Input parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../license.md">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../contributing.md">Contributing</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Modbus Simulator CLI</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Getting started</li>
+      <li class="breadcrumb-item active">Quick start</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="quick-start">Quick Start</h1>
+<p>The most simple and quick way to run the modbus simulator is by using docker,
+in this example we will run the modbus simulator without simulation.</p>
+<ol>
+<li>Pull the Modbus Simulator</li>
+</ol>
+<pre><code>docker pull paulorb/modbus-simulator-cli
+</code></pre>
+<ol>
+<li>Run the Modbus Simulator</li>
+</ol>
+<pre><code>docker run --rm -p 5002:5002 paulorb/modbus-simulator-cli
+</code></pre>
+<p>This simulator offers many other types of simulation, <strong>predefined ones</strong> or <strong>custom</strong> (based on a configuration file)</p>
+<h2 id="predefined-simulations">Predefined Simulations</h2>
+<h3 id="random-values">Random values</h3>
+<p>By specifying <strong>-sr</strong> argument the simulator will generate random numbers for register values, each time a read operation
+is performed, write operations are ignored.</p>
+<h2 id="custom-simulation">Custom Simulation</h2>
+<p>The simulation can be customized by providing a configuration (in XML format) to the simulator. This is an example of configuration:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;US-ASCII&quot; ?&gt;
+&lt;device ip=&quot;0.0.0.0&quot; port=&quot;502&quot;&gt;
+    &lt;configuration initializeUndefinedRegisters=&quot;true&quot; initialValue=&quot;0&quot;&gt;
+        &lt;registers&gt;
+            &lt;register addressType=&quot;HOLDING_REGISTER&quot; address=&quot;14&quot; symbol=&quot;RPM_MOTOR&quot;&gt;500&lt;/register&gt;
+            &lt;register addressType=&quot;HOLDING_REGISTER&quot; address=&quot;10&quot; datatype=&quot;FLOAT32&quot; symbol=&quot;TEMPERATURE&quot;&gt;-12.5&lt;/register&gt;
+            &lt;register addressType=&quot;HOLDING_REGISTER&quot; address=&quot;0&quot;  datatype=&quot;INT16&quot; symbol=&quot;RPM_MOTOR1&quot;&gt;1&lt;/register&gt;
+            &lt;register addressType=&quot;COIL&quot; address=&quot;1&quot; symbol=&quot;RELAYON&quot;&gt;1&lt;/register&gt;
+            &lt;register addressType=&quot;DISCRETE_INPUT&quot; address=&quot;0&quot; symbol=&quot;RELAY_STATUS&quot;&gt;1&lt;/register&gt;
+            &lt;register addressType=&quot;INPUT_REGISTER&quot; address=&quot;0&quot; symbol=&quot;RPM&quot;&gt;1&lt;/register&gt;
+        &lt;/registers&gt;
+    &lt;/configuration&gt;
+    &lt;simulation plcScanTime=&quot;1000&quot;&gt;
+        &lt;set symbol=&quot;TEMPERATURE&quot;&gt;2.0&lt;/set&gt;
+        &lt;set symbol=&quot;RPM_MOTOR&quot;&gt;15&lt;/set&gt;
+        &lt;delay&gt;500&lt;/delay&gt;
+        &lt;set symbol=&quot;RPM&quot;&gt;1&lt;/set&gt;
+        &lt;delay&gt;500&lt;/delay&gt;
+        &lt;set symbol=&quot;RPM&quot;&gt;0&lt;/set&gt;
+        &lt;delay&gt;500&lt;/delay&gt;
+        &lt;sub symbol=&quot;RPM_MOTOR&quot;&gt;10&lt;/sub&gt;
+        &lt;delay&gt;500&lt;/delay&gt;
+        &lt;add symbol=&quot;RPM_MOTOR&quot;&gt;10&lt;/add&gt;
+    &lt;/simulation&gt;
+&lt;/device&gt;
+</code></pre>
+<p>Sections <strong>device</strong> and  <strong>configuration</strong> are <strong>mandatory</strong> </p>
+<h2 id="custom-simulation-with-docker">Custom simulation with docker</h2>
+<p>For the custom simulation to work, the configuration file must be defined. </p>
+<ol>
+<li>Place the configuration file in a folder for example <em>simulation</em> folder</li>
+<li>From inside the folder (cd simulation) execute the following command </li>
+</ol>
+<pre><code>docker run -it -v $PWD/:/simulation -p5002:5002 paulorb/modbus-simulator-cli   -f /simulation/simulation.xml
+</code></pre>
+<h2 id="device-section">Device section</h2>
+<p>Device section is used to configure the network parameters of the driver
+<em>TODO: define device section</em></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../.." class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../operations/" class="btn btn-neutral float-right" title="Operations">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2023 - 2024 Paulo Balbino</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/paulorb/modbus-simulator-cli" class="fa fa-code-fork" style="color: #fcfcfc"> paulorb/modbus-simulator-cli</a>
+        </span>
+    
+    
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../operations/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
