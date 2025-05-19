@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - multiarch
+      - refs/tags/*
   pull_request:
     branches:
       - master
