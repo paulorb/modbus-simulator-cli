@@ -71,4 +71,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: paulorb/modbus-simulator-cli:latest,paulorb/modbus-simulator-cli:9.9.9
+          tags: paulorb/modbus-simulator-cli:latest,paulorb/modbus-simulator-cli:${{ github.ref_name }}
