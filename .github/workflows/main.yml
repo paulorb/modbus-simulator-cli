@@ -61,7 +61,7 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
-    if: ${{ (github.event.action == 'push' || github.event.action == 'created') && contains(github.ref_name, '.') }} 
+    if: ${{ contains(github.ref_name, '.') }} 
     steps:
       -
         name: Login to Docker Hub
