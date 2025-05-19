@@ -22,6 +22,7 @@ jobs:
           echo "Event action: ${{ github.event_name }}"
           echo "Event type: ${{ github.event.action }}"
           echo "Ref name: ${{  github.ref_name }}"
+          echo "Ref Type: ${{ github.event.ref_type }}"
     - name: Checkout Repository
       uses: actions/checkout@v2
 
