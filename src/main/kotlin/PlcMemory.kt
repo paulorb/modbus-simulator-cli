@@ -26,11 +26,16 @@ class PlcMemory(configurationParser: ConfigurationParser)  : IModbusServerEventL
                         holdingRegister[register.address.toInt()] =  lowWord.toShort()
                         holdingRegister[register.address.toInt() + 1] =  highWord.toShort()
                     }else if(register.datatype == "UINT16"){
-                        holdingRegister[register.address.toInt()] =  register.value.toUShort().toShort()
+                        // Check if the value starts with "0x", if it does, interpret it as Hex value.
+                        if(register.value.startsWith("0x", ignoreCase = true)){
+                            val hex = register.value.substring(2)
+                            val parsed = hex.toUInt(16).toInt() and 0xFFFF
+                            holdingRegister[register.address.toInt()] = parsed.toShort()
+                        } else {
+                            holdingRegister[register.address.toInt()] = register.value.toUShort().toShort()
+                        }
                     }else
                         holdingRegister[register.address.toInt()] =  register.value.toShort()
-
-
                 }
                 AddressType.COIL -> coils[register.address.toInt()] = (register.value.toInt() == 1)
                 AddressType.DISCRETE_INPUT -> inputStatus[register.address.toInt()] =  (register.value.toInt() == 1)

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<device ip="0.0.0.0" port="5002">
+  <configuration initializeUndefinedRegisters="true" initialValue="0">
+    <registers>
+      <!-- BOOL: True -->
+      <register addressType="HOLDING_REGISTER" address="0" datatype="UINT16" symbol="bool_val">0x0001</register>
+      <!-- BYTE: 42 -->
+      <register addressType="HOLDING_REGISTER" address="1" datatype="UINT16" symbol="byte_val">0x002A</register>
+      <!-- WORD: 42424 -->
+      <register addressType="HOLDING_REGISTER" address="2" datatype="UINT16" symbol="word_val">0xA5B8</register>
+      <!-- DWORD: 4242442424 -->
+      <register addressType="HOLDING_REGISTER" address="3" datatype="UINT16" symbol="dword_val_1">0xFCDE</register>
+      <register addressType="HOLDING_REGISTER" address="4" datatype="UINT16" symbol="dword_val_2">0x88B8</register>
+      <!-- LWORD: 4242442424242424242 -->
+      <register addressType="HOLDING_REGISTER" address="5" datatype="UINT16" symbol="lword_val_1">0x3AE0</register>
+      <register addressType="HOLDING_REGISTER" address="6" datatype="UINT16" symbol="lword_val_2">0x2EE8</register>
+      <register addressType="HOLDING_REGISTER" address="7" datatype="UINT16" symbol="lword_val_3">0x4D04</register>
+      <register addressType="HOLDING_REGISTER" address="8" datatype="UINT16" symbol="lword_val_4">0x49B2</register>
+
+      <!-- Signed/unsigned integers -->
+      <!-- SINT: -42 -->
+      <register addressType="HOLDING_REGISTER" address="9" datatype="UINT16" symbol="sint_val">0xFFD6</register>
+      <!-- USINT: 42 -->
+      <register addressType="HOLDING_REGISTER" address="10" datatype="UINT16" symbol="usint_val">0x002A</register>
+      <!-- INT: -2424 -->
+      <register addressType="HOLDING_REGISTER" address="11" datatype="UINT16" symbol="int_val">0xF688</register>
+      <!-- UINT: 42424 -->
+      <register addressType="HOLDING_REGISTER" address="12" datatype="UINT16" symbol="uint_val">0xA5B8</register>
+      <!-- DINT: -242442424 -->
+      <register addressType="HOLDING_REGISTER" address="13" datatype="UINT16" symbol="dint_val_1">0xF18C</register>
+      <register addressType="HOLDING_REGISTER" address="14" datatype="UINT16" symbol="dint_val_2">0xF18C</register>
+      <!-- UDINT: 4242442424 -->
+      <register addressType="HOLDING_REGISTER" address="15" datatype="UINT16" symbol="udint_val_1">0xFCDE</register>
+      <register addressType="HOLDING_REGISTER" address="16" datatype="UINT16" symbol="udint_val_2">0x88B8</register>
+      <!-- LINT: -4242442424242424242 -->
+      <register addressType="HOLDING_REGISTER" address="17" datatype="UINT16" symbol="lint_val_1">0xC51F</register>
+      <register addressType="HOLDING_REGISTER" address="18" datatype="UINT16" symbol="lint_val_2">0xD117</register>
+      <register addressType="HOLDING_REGISTER" address="19" datatype="UINT16" symbol="lint_val_3">0xB2FB</register>
+      <register addressType="HOLDING_REGISTER" address="20" datatype="UINT16" symbol="lint_val_4">0xB64E</register>
+      <!-- ULINT: 4242442424242424242 -->
+      <register addressType="HOLDING_REGISTER" address="21" datatype="UINT16" symbol="ulint_val_1">0x3AE0</register>
+      <register addressType="HOLDING_REGISTER" address="22" datatype="UINT16" symbol="ulint_val_2">0x2EE8</register>
+      <register addressType="HOLDING_REGISTER" address="23" datatype="UINT16" symbol="ulint_val_3">0x4D04</register>
+      <register addressType="HOLDING_REGISTER" address="24" datatype="UINT16" symbol="ulint_val_4">0x49B2</register>
+
+      <!-- Floating point values - also start at 0 -->
+      <!-- REAL: 3.141593 -->
+      <register addressType="HOLDING_REGISTER" address="25" datatype="UINT16" symbol="real_val_1">0x4049</register>
+      <register addressType="HOLDING_REGISTER" address="26" datatype="UINT16" symbol="real_val_2">0x0FDC</register>
+      <!-- LREAL: 2.71828182846 -->
+      <register addressType="HOLDING_REGISTER" address="27" datatype="UINT16" symbol="lreal_val_1">0x4005</register>
+      <register addressType="HOLDING_REGISTER" address="28" datatype="UINT16" symbol="lreal_val_2">0xBF0A</register>
+      <register addressType="HOLDING_REGISTER" address="29" datatype="UINT16" symbol="lreal_val_3">0x8B14</register>
+      <register addressType="HOLDING_REGISTER" address="30" datatype="UINT16" symbol="lreal_val_4">0x5FCF</register>
+    </registers>
+  </configuration>
+</device>
