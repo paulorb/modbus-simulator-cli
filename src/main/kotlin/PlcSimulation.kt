@@ -494,7 +494,7 @@ class PlcSimulation(
                         throw CancellationException("Error - IfEqual")
                     }
                     //compare
-                    if( currentValue.first() != value.toBoolean()){
+                    if( currentValue.first() != value.toBooleanFromBinary()){
                         //abort and continue
                         //since the value does not match the condition
                         return
