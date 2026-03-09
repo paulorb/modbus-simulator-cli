@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Paulo Balbino" /><link rel="canonical" href="https://wp-net.github.io/ModbusSimulatorCLI/getting-started/operations/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Operations - Modbus Simulator CLI</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Operations";
+        var mkdocs_page_input_path = "getting-started/operations.md";
+        var mkdocs_page_url = "/ModbusSimulatorCLI/getting-started/operations/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Modbus Simulator CLI
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quick-start/">Quick start</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Operations</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#set">Set</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#toggle">Toggle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#add">Add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sub">Sub</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mult">Mult</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#div">Div</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#random">Random</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#linear">Linear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#csv">Csv</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#if-equal">If equal</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#if-greater">If greater</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#if-less">If less</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#trace">Trace</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../input-parameters/">Input parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../license.md">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../contributing.md">Contributing</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Modbus Simulator CLI</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Getting started</li>
+      <li class="breadcrumb-item active">Operations</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="operations">Operations</h1>
+<p>This sections covers the different types of operations the simulator can perform
+when configured in advanced (custom) simulation.</p>
+<h2 id="set">Set</h2>
+<p>Set (as the name implies) set a certain value to a variable, like the example below:</p>
+<pre><code class="language-xml"> &lt;set symbol=&quot;MOTOR_SPEED1&quot;&gt;100.5&lt;/set&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> and <strong>value</strong> are mandatory fields. <strong>value</strong> can be of type <em>FLOAT32</em> , <em>INT16</em> or <em>BOOL</em> which must
+follow the same type of the specified <strong>symbol</strong> definition. In case the variable already is initialized, it overwrites the value.</p>
+<p>Supported registers: <strong>HOLDING_REGISTER</strong>, <strong>COIL</strong>, <strong>DISCRETE_INPUT</strong>, <strong>INPUT_REGISTER</strong></p>
+<h2 id="toggle">Toggle</h2>
+<p>Toggle acts as a NOT inverting the logic of the COIL</p>
+<pre><code class="language-xml"> &lt;toggle symbol=&quot;COIL_REGISTER&quot; /&gt;
+</code></pre>
+<p>Supported registers: <strong>COIL</strong></p>
+<h2 id="add">Add</h2>
+<p>Add (as the name implies) add a certain value to a variable, like the example below:</p>
+<pre><code class="language-xml"> &lt;add symbol=&quot;MOTOR_SPEED1&quot;&gt;15.5&lt;/add&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> and <strong>value</strong> are mandatory fields. <strong>value</strong> can be of type <em>FLOAT32</em> , <em>INT16</em>  which must
+follow the same type of the specified <strong>symbol</strong> definition.</p>
+<p>Supported registers: <strong>HOLDING_REGISTER</strong>, <strong>INPUT_REGISTER</strong> </p>
+<p><em>For </em><em>INPUT_REGISTER</em><em>  type </em>FLOAT32<em> is not supported!</em></p>
+<h2 id="sub">Sub</h2>
+<p>Sub (as the name implies) subtract a certain value of a variable, like the example below:</p>
+<pre><code class="language-xml"> &lt;sub symbol=&quot;MOTOR_SPEED1&quot;&gt;1.12&lt;/sub&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> and <strong>value</strong> are mandatory fields. <strong>value</strong> can be of type <em>FLOAT32</em> , <em>INT16</em>  which must
+follow the same type of the specified <strong>symbol</strong> definition.</p>
+<p>Supported registers: <strong>HOLDING_REGISTER</strong>, <strong>INPUT_REGISTER</strong></p>
+<p><em>For </em><em>INPUT_REGISTER</em><em>  type </em>FLOAT32<em> is not supported!</em></p>
+<h2 id="mult">Mult</h2>
+<p>Mult (as the name implies) multiplies a certain value of a variable, like the example below:</p>
+<pre><code class="language-xml"> &lt;mult symbol=&quot;MOTOR_SPEED1&quot;&gt;1.12&lt;/mult&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> and <strong>value</strong> are mandatory fields. <strong>value</strong> can be of type <em>FLOAT32</em> , <em>INT16</em>  which must
+follow the same type of the specified <strong>symbol</strong> definition.</p>
+<p>Supported registers: <strong>HOLDING_REGISTER</strong>, <strong>INPUT_REGISTER</strong></p>
+<p><em>For </em><em>INPUT_REGISTER</em><em>  type </em>FLOAT32<em> is not supported!</em></p>
+<h2 id="div">Div</h2>
+<p>Div (as the name implies) divides a certain value of a variable, like the example below:</p>
+<pre><code class="language-xml"> &lt;div symbol=&quot;MOTOR_SPEED1&quot;&gt;1.12&lt;/div&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> and <strong>value</strong> are mandatory fields. <strong>value</strong> can be of type <em>FLOAT32</em> , <em>INT16</em>  which must
+follow the same type of the specified <strong>symbol</strong> definition.</p>
+<p>Supported registers: <strong>HOLDING_REGISTER</strong>, <strong>INPUT_REGISTER</strong></p>
+<p><em>For </em><em>INPUT_REGISTER</em><em>  type </em>FLOAT32<em> is not supported!</em></p>
+<h2 id="random">Random</h2>
+<p>Random generates new random values each time it executes</p>
+<pre><code class="language-xml"> &lt;random symbol=&quot;TEMPERATURE1&quot; valueMin=&quot;-50.0&quot; valueMax=&quot;10.0&quot;/&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> and <strong>valueMin</strong> and <strong>valueMax</strong> are mandatory fields. Both values can be of type <em>FLOAT32</em> , <em>INT16</em>  which must
+follow the same type of the specified <strong>symbol</strong> definition.</p>
+<p>Supported registers: <strong>HOLDING_REGISTER</strong>, <strong>INPUT_REGISTER</strong></p>
+<p><em>For </em><em>INPUT_REGISTER</em><em>  type </em>FLOAT32<em> is not supported!</em></p>
+<h2 id="linear">Linear</h2>
+<p>Generates new values following a linear equation (ax + b)</p>
+<pre><code>&lt;linear symbol=&quot;TEMPERATURE_MOTOR1&quot; a=&quot;3&quot; b=&quot;2&quot; startX=&quot;0&quot; endX=&quot;12&quot; replay=&quot;true&quot; step=&quot;1.5&quot;/&gt;
+&lt;linear symbol=&quot;TEMPERATURE_MOTOR2&quot; a=&quot;3&quot; b=&quot;2&quot; startX=&quot;12&quot; endX=&quot;0&quot; replay=&quot;true&quot; step=&quot;1.5&quot;/&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> , <strong>startX</strong> , <strong>endX</strong>, <strong>a</strong>, <strong>b</strong> and <strong>step</strong> are mandatory fields. Both values can be of type <em>FLOAT32</em> , <em>INT16</em>  which must
+follow the same type of the specified <strong>symbol</strong> definition.
+<strong>step</strong> must be a positive value of type INT16 or FLOAT32</p>
+<p>On the first example (xml above) x is starting in 0 and going up until 12 (&lt;=) with a step of 1.5
+so the x values for the equation will be [0 1.5 3 4.5 6 7.5 9 10.5 12].</p>
+<p>Second example is the oposite, note that startX is greater than endX, so the x values applied on this equation will be
+[12 10.5 9 7.5 6 4.5 3 1.5 0], also note that the <strong>step</strong> is positive, what is different is the <strong>startX</strong> and <strong>endX</strong> to indicate order.</p>
+<p>Supported registers: <strong>HOLDING_REGISTER</strong>, <strong>INPUT_REGISTER</strong></p>
+<p><em>For </em><em>INPUT_REGISTER</em><em>  type </em>FLOAT32<em> is not supported!</em></p>
+<h2 id="csv">Csv</h2>
+<p>Uses a CSV as data source based on the specified column.</p>
+<pre><code>&lt;csv symbol=&quot;TEMPERATURE_MOTOR3&quot; file=&quot;test_data.csv&quot; column=&quot;1&quot; replay=&quot;true&quot;/&gt;
+&lt;csv symbol=&quot;TEMPERATURE_MOTOR4&quot; file=&quot;test_data.csv&quot; column=&quot;2&quot; step=&quot;2&quot; startRow=&quot;2&quot; endRow=&quot;5&quot; replay=&quot;true&quot;/&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> , <strong>file</strong> , <strong>column</strong> are mandatory fields. </p>
+<p><strong>column</strong> must have the number of the column to be read, please notice that the values on the CSV must
+follow the same type of the specified <strong>symbol</strong> definition.
+<strong>step</strong> must be a positive value of type INT16 which is related to the row index</p>
+<p>Each time this operation is executed it will get the next row of the column specified and set to the specified symbol. </p>
+<p>Supported registers: HOLDING_REGISTER, INPUT_REGISTER</p>
+<p>For INPUT_REGISTER type FLOAT32 is not supported!</p>
+<h2 id="if-equal">If equal</h2>
+<p>Used for comparison, every operation inside the ifequal body will be executed</p>
+<pre><code>  &lt;ifEqual symbol=&quot;TEMPERATURE_MOTOR5&quot; value=&quot;-12.5&quot;&gt;
+            &lt;set symbol=&quot;MOTOR5_RPM&quot;&gt;0&lt;/set&gt;        
+  &lt;/ifEqual&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> and <strong>value</strong> are mandatory fields. Both can have an atomic value or a reference to a symbol (which can refer to a register or a parameter)</p>
+<p>Supported registers: HOLDING_REGISTER, INPUT_REGISTER, COIL and PARAMETER</p>
+<p>Example using a parameter as a value</p>
+<pre><code>  &lt;ifEqual symbol=&quot;TEMPERATURE_MOTOR5&quot; value=&quot;PARAM_DEFINED_TEMPERATURE&quot;&gt;
+            &lt;set symbol=&quot;MOTOR5_RPM&quot;&gt;0&lt;/set&gt;        
+  &lt;/ifEqual&gt;
+</code></pre>
+<p>Please note the <strong>symbol</strong> and <strong>value</strong> datatype needs to match.</p>
+<h2 id="if-greater">If greater</h2>
+<p>Used for comparison, every operation inside the ifGreater body will be executed</p>
+<pre><code>  &lt;ifGreater symbol=&quot;TEMPERATURE_MOTOR5&quot; value=&quot;-12.5&quot;&gt;
+            &lt;set symbol=&quot;MOTOR5_RPM&quot;&gt;0&lt;/set&gt;        
+  &lt;/ifGreater&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> and <strong>value</strong> are mandatory fields. Both can have an atomic value or a reference to a symbol (which can refer to a register or a parameter)</p>
+<p>Supported registers: HOLDING_REGISTER, INPUT_REGISTER, COIL and PARAMETER</p>
+<p>Example using a parameter as a value</p>
+<pre><code>  &lt;ifGreater symbol=&quot;TEMPERATURE_MOTOR5&quot; value=&quot;PARAM_DEFINED_TEMPERATURE&quot;&gt;
+            &lt;set symbol=&quot;MOTOR5_RPM&quot;&gt;0&lt;/set&gt;        
+  &lt;/ifGreater&gt;
+</code></pre>
+<p>Please note the <strong>symbol</strong> and <strong>value</strong> datatype needs to match.</p>
+<h2 id="if-less">If less</h2>
+<p>Used for comparison, every operation inside the ifLess body will be executed</p>
+<pre><code>  &lt;ifLess symbol=&quot;TEMPERATURE_MOTOR5&quot; value=&quot;-12.5&quot;&gt;
+            &lt;set symbol=&quot;MOTOR5_RPM&quot;&gt;0&lt;/set&gt;        
+  &lt;/ifLess&gt;
+</code></pre>
+<p>Both <strong>symbol</strong> and <strong>value</strong> are mandatory fields. Both can have an atomic value or a reference to a symbol (which can refer to a register or a parameter)</p>
+<p>Supported registers: HOLDING_REGISTER, INPUT_REGISTER, COIL and PARAMETER</p>
+<p>Example using a parameter as a value</p>
+<pre><code>  &lt;ifLess symbol=&quot;TEMPERATURE_MOTOR5&quot; value=&quot;PARAM_DEFINED_TEMPERATURE&quot;&gt;
+            &lt;set symbol=&quot;MOTOR5_RPM&quot;&gt;0&lt;/set&gt;        
+  &lt;/ifLess&gt;
+</code></pre>
+<p>Please note the <strong>symbol</strong> and <strong>value</strong> datatype needs to match.</p>
+<h2 id="trace">Trace</h2>
+<p>Trace operation provides a tool for debugging, by printing (tracing) the current
+value of symbols</p>
+<p>Supported registers: <strong>HOLDING_REGISTER</strong>, <strong>COIL</strong>, <strong>DISCRETE_INPUT</strong>, <strong>INPUT_REGISTER</strong></p>
+<pre><code>    &lt;trace symbol=&quot;RPM_MOTOR&quot; /&gt;
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../quick-start/" class="btn btn-neutral float-left" title="Quick start"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../input-parameters/" class="btn btn-neutral float-right" title="Input parameters">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2023 - 2024 Paulo Balbino</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/paulorb/modbus-simulator-cli" class="fa fa-code-fork" style="color: #fcfcfc"> paulorb/modbus-simulator-cli</a>
+        </span>
+    
+    
+      <span><a href="../quick-start/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../input-parameters/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
